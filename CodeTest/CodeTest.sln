@@ -51,6 +51,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SherlockandAnagrams", "Sher
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CountTriplets", "CountTriplets\CountTriplets.vcxproj", "{8A7860FC-FB91-4CBD-B267-EF74E2A911B5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FrequencyQueries", "FrequencyQueries\FrequencyQueries.vcxproj", "{5B5F94E6-74E4-408E-A299-BF5B733313D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -211,6 +213,14 @@ Global
 		{8A7860FC-FB91-4CBD-B267-EF74E2A911B5}.Release|x64.Build.0 = Release|x64
 		{8A7860FC-FB91-4CBD-B267-EF74E2A911B5}.Release|x86.ActiveCfg = Release|Win32
 		{8A7860FC-FB91-4CBD-B267-EF74E2A911B5}.Release|x86.Build.0 = Release|Win32
+		{5B5F94E6-74E4-408E-A299-BF5B733313D4}.Debug|x64.ActiveCfg = Debug|x64
+		{5B5F94E6-74E4-408E-A299-BF5B733313D4}.Debug|x64.Build.0 = Debug|x64
+		{5B5F94E6-74E4-408E-A299-BF5B733313D4}.Debug|x86.ActiveCfg = Debug|Win32
+		{5B5F94E6-74E4-408E-A299-BF5B733313D4}.Debug|x86.Build.0 = Debug|Win32
+		{5B5F94E6-74E4-408E-A299-BF5B733313D4}.Release|x64.ActiveCfg = Release|x64
+		{5B5F94E6-74E4-408E-A299-BF5B733313D4}.Release|x64.Build.0 = Release|x64
+		{5B5F94E6-74E4-408E-A299-BF5B733313D4}.Release|x86.ActiveCfg = Release|Win32
+		{5B5F94E6-74E4-408E-A299-BF5B733313D4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -238,6 +248,7 @@ Global
 		{95182D55-B447-4495-A24E-D63876F704CE} = {557EEDAF-C95D-47BB-8757-7AFFB0DA356B}
 		{F3A8D254-53CB-49A1-A31B-42754BF3B267} = {557EEDAF-C95D-47BB-8757-7AFFB0DA356B}
 		{8A7860FC-FB91-4CBD-B267-EF74E2A911B5} = {557EEDAF-C95D-47BB-8757-7AFFB0DA356B}
+		{5B5F94E6-74E4-408E-A299-BF5B733313D4} = {557EEDAF-C95D-47BB-8757-7AFFB0DA356B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9D17E0D5-AC87-49C0-A04A-1417AAB7B46E}
