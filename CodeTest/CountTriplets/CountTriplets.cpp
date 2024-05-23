@@ -7,17 +7,16 @@ string rtrim(const string&);
 vector<string> split(const string&);
 
 // Complete the countTriplets function below.
-#include <unordered_map>
 long countTriplets(vector<long> arr, long r) 
 {
-    std::unordered_map<long, long> InputMap;
+    int InputVectorSize = static_cast<int>(arr.size());
+    std::multiset<long> SortingSet;
 
-    int arrSize = static_cast<int>(arr.size());
-    for (int i = 0; i < arrSize; i++)
+    for (int i = 0; i < InputVectorSize; i++)
     {
-        InputMap[arr[i]] += 1;
+        
     }
-    int a = 0;
+
     return 1;
 }
 
