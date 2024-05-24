@@ -45,8 +45,8 @@ int main(void)
     // cout << "b = " << b << endl;
 
     MyClass InputValue;
-    cin >> InputValue;
-    cout << InputValue;
+    std::cin >> InputValue;
+    std::cout << InputValue;
 
     return 0;
 }

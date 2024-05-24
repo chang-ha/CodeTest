@@ -5,7 +5,7 @@ using namespace std;
 
 int main(void) {
     string str;
-    cin >> str;
-    cout << str;
+    std::cin >> str;
+    std::cout << str;
     return 0;
 }
