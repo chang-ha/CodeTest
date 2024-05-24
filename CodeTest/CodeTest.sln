@@ -57,6 +57,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "String", "String", "{651705
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Strings_MakingAnagrams", "Strings_MakingAnagrams\Strings_MakingAnagrams.vcxproj", "{CA094370-F48E-424D-A114-0E4B492D3672}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AlternatingCharacters", "AlternatingCharacters\AlternatingCharacters.vcxproj", "{155175EC-21B1-4727-925B-9A0ECB888E98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -233,6 +235,14 @@ Global
 		{CA094370-F48E-424D-A114-0E4B492D3672}.Release|x64.Build.0 = Release|x64
 		{CA094370-F48E-424D-A114-0E4B492D3672}.Release|x86.ActiveCfg = Release|Win32
 		{CA094370-F48E-424D-A114-0E4B492D3672}.Release|x86.Build.0 = Release|Win32
+		{155175EC-21B1-4727-925B-9A0ECB888E98}.Debug|x64.ActiveCfg = Debug|x64
+		{155175EC-21B1-4727-925B-9A0ECB888E98}.Debug|x64.Build.0 = Debug|x64
+		{155175EC-21B1-4727-925B-9A0ECB888E98}.Debug|x86.ActiveCfg = Debug|Win32
+		{155175EC-21B1-4727-925B-9A0ECB888E98}.Debug|x86.Build.0 = Debug|Win32
+		{155175EC-21B1-4727-925B-9A0ECB888E98}.Release|x64.ActiveCfg = Release|x64
+		{155175EC-21B1-4727-925B-9A0ECB888E98}.Release|x64.Build.0 = Release|x64
+		{155175EC-21B1-4727-925B-9A0ECB888E98}.Release|x86.ActiveCfg = Release|Win32
+		{155175EC-21B1-4727-925B-9A0ECB888E98}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -263,6 +273,7 @@ Global
 		{5B5F94E6-74E4-408E-A299-BF5B733313D4} = {557EEDAF-C95D-47BB-8757-7AFFB0DA356B}
 		{651705BC-B90E-4819-8A88-FD995C79E07B} = {01BD9209-B7B4-4EFB-B6B7-D94392CCE58F}
 		{CA094370-F48E-424D-A114-0E4B492D3672} = {651705BC-B90E-4819-8A88-FD995C79E07B}
+		{155175EC-21B1-4727-925B-9A0ECB888E98} = {651705BC-B90E-4819-8A88-FD995C79E07B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9D17E0D5-AC87-49C0-A04A-1417AAB7B46E}
