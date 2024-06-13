@@ -1,51 +1,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
-class CTest
+int commonChild(string s1, string s2)
 {
-public:
-	int  mA;
+	std::vector<std::vector<int>> Result;
 
-public:
-	CTest Create()
+	size_t s1_Size = s1.size();
+	size_t s2_Size = s2.size();
+
+	Result.resize(s1_Size + 1);
+	for (std::vector<int>& CurVector : Result)
 	{
-		CTest mCTest;
-		return mCTest;
+		CurVector.resize(s2.size() + 1);
 	}
-};
 
-
-class CSingleton
-{
-private:
-	static CSingleton* mCSingleton;
-	CSingleton() = default;
-
-	CSingleton(const CSingleton& _Other) = delete;
-	CSingleton(CSingleton&& _Other) noexcept = delete;
-	CSingleton& operator=(const CSingleton& _Other) = delete;
-	CSingleton& operator=(CSingleton&& _Other) noexcept = delete;
-
-public:
-	static CSingleton* GetSingleton()
+	
+	for (size_t i = 1; i < s1_Size + 1; i++)
 	{
-		if (nullptr == mCSingleton)
+		for (size_t j = 1; j < s2_Size + 1; j++)
 		{
-			mCSingleton = new CSingleton();
+			if (s1[i - 1] == s2[j - 1])
+			{
+				Result[i][j] = Result[i - 1][j - 1] + 1;
+			}
+			else
+			{
+				Result[i][j] = max(Result[i - 1][j], Result[i][j - 1]);
+			}
 		}
-
-		return mCSingleton;
 	}
-};
 
-CSingleton* CSingleton::mCSingleton = nullptr;
+	return Result[s1_Size][s1_Size];
+}
+
 
 int main()
 {
-	CTest* a = new CTest();
-	CTest* b = new CTest();
-	CTest (CTest::*address)() = &CTest::Create;
-	CSingleton* s = CSingleton::GetSingleton();
-	int x = 0;
+	commonChild("LARRY", "SALLY");
 }
