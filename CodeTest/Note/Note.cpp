@@ -1,40 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int commonChild(string s1, string s2)
+int minimumAbsoluteDifference(vector<int> arr)
 {
-	std::vector<std::vector<int>> Result;
+	std::multiset<int> CalcuSet;
 
-	size_t s1_Size = s1.size();
-	size_t s2_Size = s2.size();
-
-	Result.resize(s1_Size + 1);
-	for (std::vector<int>& CurVector : Result)
+	for (int _CurInt : arr)
 	{
-		CurVector.resize(s2.size() + 1);
+		CalcuSet.insert(_CurInt);
 	}
 
-	
-	for (size_t i = 1; i < s1_Size + 1; i++)
+	std::multiset<int>::const_iterator FirstElement = CalcuSet.begin();
+	std::multiset<int>::const_iterator SecondElement = CalcuSet.begin();
+	std::advance(SecondElement, 1);
+	std::multiset<int>::const_iterator EndElement = CalcuSet.end();
+	int Result = INT_MAX;
+
+	for (; SecondElement != EndElement;)
 	{
-		for (size_t j = 1; j < s2_Size + 1; j++)
-		{
-			if (s1[i - 1] == s2[j - 1])
-			{
-				Result[i][j] = Result[i - 1][j - 1] + 1;
-			}
-			else
-			{
-				Result[i][j] = max(Result[i - 1][j], Result[i][j - 1]);
-			}
-		}
+		Result = std::min(Result, std::abs(*FirstElement - *SecondElement));
+		++FirstElement;
+		++SecondElement;
 	}
 
-	return Result[s1_Size][s1_Size];
+	return Result;
 }
-
 
 int main()
 {
-	commonChild("LARRY", "SALLY");
+	minimumAbsoluteDifference({1,-2,3,-4,5,-6});
 }
