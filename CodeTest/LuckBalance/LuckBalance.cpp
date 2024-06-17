@@ -15,10 +15,45 @@ vector<string> split(const string&);
  *  2. 2D_INTEGER_ARRAY contests
  */
 
-int luckBalance(int k, vector<vector<int>> contests) 
+int luckBalance(int k, vector<vector<int>> contests)
 {
+    int Result = 0;
+    std::multiset<int, std::greater<int>> LuckContainer;
 
+    for (vector<int> CurLuck : contests)
+    {
+        if (2 != CurLuck.size())
+        {
+            // Error
+            return INT_MIN;
+        }
+
+        if (0 == CurLuck[1])
+        {
+            Result += CurLuck[0];
+        }
+        else
+        {
+            LuckContainer.insert(CurLuck[0]);
+        }
+    }
+
+    for (int CurLuck : LuckContainer)
+    {
+        if (0 < k)
+        {
+            --k;
+            Result += CurLuck;
+        }
+        else
+        {
+            Result -= CurLuck;
+        }
+    }
+
+    return Result;
 }
+
 
 int main()
 {
