@@ -16,9 +16,8 @@ string solution(vector<string> arr)
     }
 
     return answer;
-}
 
-int main()
-{
-    solution({"a", "b", "c"});
+    // #include <numeric>
+    // std::accumulate
+    // return std::accumulate(arr.begin(), arr.end(), string(""));
 }
