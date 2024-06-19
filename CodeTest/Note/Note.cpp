@@ -1,24 +1,37 @@
-#include <string>
-#include <vector>
-
 using namespace std;
 
-string solution(vector<string> arr)
+#include <set>
+#include <vector>
+#include <algorithm>
+
+int maxMin(int k, vector<int> arr)
 {
-    string answer = "";
+	int Result = INT_MAX;
 
-    size_t Array_Size = arr.size();
-    answer.reserve(Array_Size);
+	size_t Arr_Size = arr.size();
+	if (Arr_Size < k || 1 >= k)
+	{
+		// Error
+		return Result;
+	}
 
-    for (size_t i = 0; i < Array_Size; i++)
-    {
-        answer += arr[i];
-    }
+	std::sort(arr.begin(), arr.end());
 
-    return answer;
+	if (Arr_Size == k)
+	{
+		Result = arr[Arr_Size - 1] - arr[0];
+		return Result;
+	}
+
+	size_t LoopCount = Arr_Size - static_cast<size_t>(k) + 1;
+	for (size_t i = 0; i < LoopCount; i++)
+	{
+		Result = std::min(Result, arr[i + k - 1] - arr[i]);
+	}
+	return Result;
 }
 
 int main()
 {
-    solution({"a", "b", "c"});
+	maxMin(3, { 10,100,300,200,1000,20,30 });
 }
