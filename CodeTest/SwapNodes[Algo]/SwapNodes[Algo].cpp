@@ -14,10 +14,90 @@ vector<string> split(const string&);
  *  1. 2D_INTEGER_ARRAY indexes
  *  2. INTEGER_ARRAY queries
  */
+struct MyNode
+{
+private:
+    friend class MyBinaryTree;
+
+    MyNode() = delete;
+
+    MyNode(int _Depth)
+        : Depth(_Depth)
+    {
+
+    }
+
+    ~MyNode()
+    {
+        if (nullptr != LeftChild)
+        {
+            delete LeftChild;
+        }
+
+        if (nullptr != RightChild)
+        {
+            delete RightChild;
+        }
+    }
+
+    bool HasChild()
+    {
+        return (nullptr != LeftChild) && (nullptr != RightChild);
+    }
+
+    int Data = -1;
+    int Depth = -1;
+    MyNode* LeftChild = nullptr;
+    MyNode* RightChild = nullptr;
+};
+
+class MyBinaryTree
+{
+public:
+    MyBinaryTree()
+    {
+        RootNode = new MyNode(1);
+        RootNode->Data = 1;
+    }
+    
+    ~MyBinaryTree()
+    {
+        delete RootNode;
+    }
+
+    void SwapChild(MyNode* _ParentNode)
+    {
+        MyNode* TempNode = _ParentNode->LeftChild;
+        _ParentNode->LeftChild = _ParentNode->RightChild;
+        _ParentNode->RightChild = TempNode;
+    }
+
+    MyNode* CreateNode(int _Depth, int _Data)
+    {
+        RootNode = new MyNode(_Depth);
+        RootNode->Data = _Data;
+    }
+
+protected:
+    MyNode* RootNode = nullptr;
+
+private:
+};
 
 vector<vector<int>> swapNodes(vector<vector<int>> indexes, vector<int> queries) 
 {
+    MyBinaryTree mBinaryTree;
 
+    for (const std::vector<int>& _Cur : indexes)
+    {
+        _Cur;
+        int a = 0;
+    }
+
+    for (const int _CurQuery : queries)
+    {
+
+    }
 }
 
 int main()
