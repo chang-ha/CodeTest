@@ -14,15 +14,13 @@ vector<string> split(const string&);
  *  1. 2D_INTEGER_ARRAY indexes
  *  2. INTEGER_ARRAY queries
  */
-struct MyNode
+class MyNode
 {
 private:
     friend class MyBinaryTree;
 
-    MyNode() = delete;
-
-    MyNode(int _Depth)
-        : Depth(_Depth)
+    MyNode(int _Data)
+        : Data(_Data)
     {
 
     }
@@ -40,13 +38,8 @@ private:
         }
     }
 
-    bool HasChild()
-    {
-        return (nullptr != LeftChild) && (nullptr != RightChild);
-    }
-
     int Data = -1;
-    int Depth = -1;
+    MyNode* ParentNode = nullptr;
     MyNode* LeftChild = nullptr;
     MyNode* RightChild = nullptr;
 };
@@ -57,9 +50,9 @@ public:
     MyBinaryTree()
     {
         RootNode = new MyNode(1);
-        RootNode->Data = 1;
+        MapSize += 1;
     }
-    
+
     ~MyBinaryTree()
     {
         delete RootNode;
@@ -72,33 +65,139 @@ public:
         _ParentNode->RightChild = TempNode;
     }
 
-    MyNode* CreateNode(int _Depth, int _Data)
+    void SwapChild(MyNode* _ParentNode, int _Depth)
     {
-        RootNode = new MyNode(_Depth);
-        RootNode->Data = _Data;
+        if (nullptr == _ParentNode)
+        {
+            return;
+        }
+
+        if (0 == GetDepth(_ParentNode) % _Depth)
+        {
+            SwapChild(_ParentNode);
+        }
+
+        SwapChild(_ParentNode->LeftChild, _Depth);
+        SwapChild(_ParentNode->RightChild, _Depth);
+    }
+
+    void Insert(const  int _Data)
+    {
+        MyNode* InsertNode = new MyNode(_Data);
+
+        queue<MyNode*> SearchQueue;
+        SearchQueue.push(RootNode);
+
+        MyNode* CurNode = nullptr;
+        while (!SearchQueue.empty())
+        {
+            CurNode = SearchQueue.front();
+            SearchQueue.pop();
+
+            if (-1 == CurNode->Data)
+            {
+                continue;
+            }
+
+            if (nullptr == CurNode->LeftChild)
+            {
+                CurNode->LeftChild = InsertNode;
+                InsertNode->ParentNode = CurNode;
+                MapSize += 1;
+                break;
+            }
+            else
+            {
+                SearchQueue.push(CurNode->LeftChild);
+            }
+
+            if (nullptr == CurNode->RightChild)
+            {
+                CurNode->RightChild = InsertNode;
+                InsertNode->ParentNode = CurNode;
+                MapSize += 1;
+                break;
+            }
+            else
+            {
+                SearchQueue.push(CurNode->RightChild);
+            }
+        }
+    }
+
+    int GetDepth(MyNode* _Node)
+    {
+        MyNode* _CurNode = _Node;
+        int Depth = 1;
+        while (nullptr != _CurNode->ParentNode)
+        {
+            _CurNode = _CurNode->ParentNode;
+            Depth += 1;
+        }
+
+        return Depth;
+    }
+
+    MyNode* GetRootNode()
+    {
+        return RootNode;
+    }
+
+    vector<int> GetInorderTraversal()
+    {
+        vector<int> ResultVector;
+        ResultVector.reserve(MapSize);
+        InorderTraversal(RootNode, ResultVector);
+        return ResultVector;
     }
 
 protected:
     MyNode* RootNode = nullptr;
+    int MapSize = 0;
 
 private:
+    void InorderTraversal(MyNode* _Node, vector<int>& _Vector)
+    {
+        if (nullptr != _Node->LeftChild)
+        {
+            InorderTraversal(_Node->LeftChild, _Vector);
+        }
+
+        if (-1 != _Node->Data)
+        {
+            _Vector.push_back(_Node->Data);
+        }
+
+        if (nullptr != _Node->RightChild)
+        {
+            InorderTraversal(_Node->RightChild, _Vector);
+        }
+    }
 };
 
-vector<vector<int>> swapNodes(vector<vector<int>> indexes, vector<int> queries) 
+vector<vector<int>> swapNodes(vector<vector<int>> indexes, vector<int> queries)
 {
-    MyBinaryTree mBinaryTree;
+    MyBinaryTree BinaryTree;
 
-    for (const std::vector<int>& _Cur : indexes)
+    for (const vector<int>& _CurVector : indexes)
     {
-        _Cur;
-        int a = 0;
+        for (const int _CurData : _CurVector)
+        {
+            BinaryTree.Insert(_CurData);
+        }
     }
+
+    std::vector<vector<int>> Result;
 
     for (const int _CurQuery : queries)
     {
-
+        BinaryTree.SwapChild(BinaryTree.GetRootNode(), _CurQuery);
+        Result.push_back(BinaryTree.GetInorderTraversal());
     }
+
+    return Result;
 }
+
 
 int main()
 {
