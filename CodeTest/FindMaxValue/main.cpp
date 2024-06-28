@@ -43,6 +43,20 @@ int ForLoop_Simple(std::vector<int> _FindVector)
 	return MaxValue;
 }
 
+int RefForLoop_Simple(std::vector<int>& _FindVector)
+{
+	int MaxValue = INT_MIN;
+	for (const int _CurValue : _FindVector)
+	{
+		if (_CurValue > MaxValue)
+		{
+			MaxValue = _CurValue;
+		}
+	}
+
+	return MaxValue;
+}
+
 #include <numeric>
 int main()
 {
@@ -53,6 +67,12 @@ int main()
 	TIME_UNIT DTime = CheckFunctionTime([&]()
 		{
 			ForLoop_Simple(InputVector);
+		});
+
+
+	TIME_UNIT ETime = CheckFunctionTime([&]()
+		{
+			RefForLoop_Simple(InputVector);
 		});
 
 	TIME_UNIT ATime = CheckFunctionTime([&]()
