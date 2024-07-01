@@ -10,10 +10,6 @@ int main()
 		{
 		});
 
-	TIME_UNIT CTime = CheckFunctionTime([&]()
-		{
-		});
-
 	TIME_UNIT BTime = CheckFunctionTime([&]()
 		{
 		});
