@@ -1,9 +1,5 @@
 #include <TimeCheck\TimeCheck.h>
 
-#include <vector>
-
-using namespace std;
-
 int main()
 {
     TIME_UNIT ATime = CheckFunctionTime([&]()
