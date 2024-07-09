@@ -15,6 +15,7 @@ vector<int> solution(int k, vector<int> score)
 	return answer;
 }
 
+#include <numeric>
 int main()
 {
 	TIME_UNIT ATime = CheckFunctionTime([&]()
@@ -25,6 +26,7 @@ int main()
 	TIME_UNIT BTime = CheckFunctionTime([&]()
 		{
 		});
+
 
 	int a = 0;
 }
