@@ -1,23 +1,9 @@
 #include <TimeCheck\TimeCheck.h>
-
-#include <string>
-#include <vector>
-
 using namespace std;
 
-#include <set>
-vector<int> solution(int k, vector<int> score)
-{
-	vector<int> answer;
-
-
-	
-	return answer;
-}
-
-#include <numeric>
 int main()
 {
+
 	TIME_UNIT ATime = CheckFunctionTime([&]()
 		{
 		});
@@ -27,6 +13,9 @@ int main()
 		{
 		});
 
+	TIME_UNIT CTime = CheckFunctionTime([&]()
+		{
+		});
 
 	int a = 0;
 }

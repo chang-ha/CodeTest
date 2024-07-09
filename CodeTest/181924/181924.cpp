@@ -3,7 +3,7 @@
 
 using namespace std;
 
-vector<int> ConstRefsolution(vector<int> arr, vector<vector<int>> queries)
+vector<int> Constsolution(vector<int> arr, vector<vector<int>> queries)
 {
 	vector<int> answer = arr;
 
