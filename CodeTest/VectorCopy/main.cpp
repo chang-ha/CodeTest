@@ -3,7 +3,6 @@
 #include <TimeCheck\TimeCheck.h>
 
 using namespace std;
-#include <numeric>
 
 void ForFunction(vector<int> _CopyVector)
 {
@@ -27,6 +26,7 @@ void CopyFunction(vector<int> _CopyVector)
 	std::copy(_CopyVector.begin(), _CopyVector.end(), Temp.begin());
 }
 
+#include <numeric>
 int main()
 {
 	std::vector<int> AVector(10000);
