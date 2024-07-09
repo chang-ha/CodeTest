@@ -23,6 +23,7 @@ vector<int> Extractsolution(int k, vector<int> score)
 		{
 			std::_Node_handle CurNode = ScoreBoard.extract(ScoreBoard.begin());
 			CurNode.value() = _CurScore;
+			// R-Value·Î static_cast
 			ScoreBoard.insert(std::move(CurNode));
 		}
 		answer.push_back(*ScoreBoard.begin());
