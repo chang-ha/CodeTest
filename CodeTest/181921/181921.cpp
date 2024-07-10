@@ -11,7 +11,9 @@ vector<int> solution(int l, int r)
 	std::vector<int> SubsetVector;
 
 	std::bitset<7> Bit;
-	for (int i = 1; i < 64; i++)
+	// 1 = 0b1
+	// 64 = 0b1'000'000
+	for (int i = 1; i <= 64; i++)
 	{
 		Bit = i;
 		int CurValue = std::stoi(Bit.to_string()) * 5;
