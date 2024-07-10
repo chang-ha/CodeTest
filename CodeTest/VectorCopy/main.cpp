@@ -4,6 +4,17 @@
 
 using namespace std;
 
+void CopyFunction(vector<int> _CopyVector)
+{
+	std::vector<int> Temp(_CopyVector.size());
+	std::copy(_CopyVector.begin(), _CopyVector.end(), Temp.begin());
+}
+
+void StructureFunction(vector<int> _CopyVector)
+{
+	std::vector<int> Temp(_CopyVector.begin(), _CopyVector.end());
+}
+
 void ForFunction(vector<int> _CopyVector)
 {
 	std::vector<int> Temp;
@@ -13,17 +24,6 @@ void ForFunction(vector<int> _CopyVector)
 	{
 		Temp.push_back(_CopyVector[i]);
 	}
-}
-
-void StructureFunction(vector<int> _CopyVector)
-{
-	std::vector<int> Temp(_CopyVector.begin(), _CopyVector.end());
-}
-
-void CopyFunction(vector<int> _CopyVector)
-{
-	std::vector<int> Temp(_CopyVector.size());
-	std::copy(_CopyVector.begin(), _CopyVector.end(), Temp.begin());
 }
 
 #include <numeric>
