@@ -7,7 +7,7 @@ using namespace std;
 int solution(vector<int> ingredient)
 {
     int answer = 0;
-    std::string StringIngredient;
+    std::string StringIngredient = "";
 
     for (const int _CurIngredient : ingredient)
     {
