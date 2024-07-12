@@ -23,7 +23,8 @@ vector<int> Extractsolution(int k, vector<int> score)
 		{
 			std::_Node_handle CurNode = ScoreBoard.extract(ScoreBoard.begin());
 			CurNode.value() = _CurScore;
-			// R-Value로 static_cast
+			// insert 내부에서 Node_handle&&를 인자로 받고있음
+			// R-Value Ref로 static_cast
 			ScoreBoard.insert(std::move(CurNode));
 		}
 		answer.push_back(*ScoreBoard.begin());

@@ -14,16 +14,19 @@ int solution(vector<int> ingredient)
         StringIngredient += std::to_string(_CurIngredient);
         size_t CurStringSize = StringIngredient.size();
 
+        // (1231의 크기 = 4)보다 작으면 continue 
         if (4 > CurStringSize)
         {
             continue;
         }
 
+        // (ooo1) 현재 string이 1아니면 continue
         if (1 != _CurIngredient)
         {
             continue;
         }
 
+        // 끝에서부터 4글자가 1231이면
         if ("1231" == StringIngredient.substr(CurStringSize - 4))
         {
             StringIngredient.erase(CurStringSize - 4);

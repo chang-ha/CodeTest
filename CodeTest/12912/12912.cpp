@@ -16,6 +16,10 @@ long long solution(int a, int b)
 
     answer = (L_a + L_b) * (std::abs(L_a - L_b) + 1) / 2;
 
+    // b * (b+1) / 2 - (a-1) * a / 2
+    // (b^2 + b - a^2 + a ) / 2
+    // (a + b) * (b - a + 1) = - a^2 + a + b^2+ b  / 2  = b^2 - a^2 + a + b / 2
+
     return answer;
 }
 
