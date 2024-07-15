@@ -42,6 +42,7 @@ void testSwitch2()
     {
         const size_t c = rand() % 20 + 1;
         // 내부에서 jump해야하는 메모리 주소값을 계산
+        //  -> 마지막 case와 비교해서 그거보다 크면 case문을 거치지않음
         // 해당 메모리 주소로 jump
 
         switch (c)
@@ -66,6 +67,40 @@ void testSwitch2()
         case 18:
         case 19:
         case 20: counter += 1231; break;
+        default: break;
+        }
+    }
+}
+
+void testSwitch4()
+{
+    size_t i;
+    for (i = 0; i < MAX_COUNT; i++)
+    {
+        const size_t c = rand() % 20 + 1;
+        // 연속된 숫자에 중간중간 빠져있는건 SwitchTable생성
+
+        int A = 0;
+        switch (c)
+        {
+        case 1:
+        case 2:
+        case 4:
+        case 5:
+        case 6: A += 1;
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12: A += 2;
+        case 13:
+        case 14:
+        case 16: A = A + 1;
+        case 17:
+        case 18:
+        case 19:
+        case 20: A += 1231; break;
         }
     }
 }
@@ -76,13 +111,33 @@ void testSwitch3()
     for (i = 0; i < MAX_COUNT; i++)
     {
         const size_t c = rand() % 20 + 1;
-        switch (0)
+        // case가 연속된 숫자가 아니면 SwitchTable 생성 X
+        // 
+        switch (c)
         {
-            case 0:
-            counter += 1231;
+        case 1:
+        case 3:
+        case 4:
+        case 6: counter += 1; break;
+        case 7:
+        case 8:
+        case 10:
+        case 11:
+        case 12: counter += 2; break;
+        case 14:
+        case 15:
+        case 16: counter = counter + 1; break;
+        case 19:
+        case 20: counter += 1231; break;
+        case 502: counter += 1323; break;
+        case 509: counter += 1323; break;
+        case 601: counter += 1323; break;
+        case 777: counter += 1323; break;
         }
     }
 }
+
+
 
 void testIf()
 {
@@ -186,6 +241,11 @@ int main()
     TIME_UNIT ETime = CheckFunctionTime([]()
         {
             testSwitch3();
+        });
+
+    TIME_UNIT FTime = CheckFunctionTime([]()
+        {
+            testSwitch4();
         });
 	return 0;
 }
