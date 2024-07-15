@@ -1,5 +1,7 @@
 #include <TimeCheck\TimeCheck.h>
 
+
+
 int main()
 {
 	TIME_UNIT ATime = CheckFunctionTime([&]()
@@ -15,5 +17,5 @@ int main()
 		{
 		});
 
-	int a = 0;
+	int x = 0;
 }
