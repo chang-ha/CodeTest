@@ -8,7 +8,7 @@ string Othersolution(vector<string> participant, vector<string> completion) {
 	string answer = "";
 	std::sort(participant.begin(), participant.end());
 	std::sort(completion.begin(), completion.end());
-	int Completion_Size = completion.size();
+	int Completion_Size = static_cast<int>(completion.size());
 	for (int i = 0; i < Completion_Size; i++)
 	{
 		if (participant[i] != completion[i])
@@ -17,7 +17,6 @@ string Othersolution(vector<string> participant, vector<string> completion) {
 	return participant[participant.size() - 1];
 }
 
-#include <string_view>
 #include <unordered_set>
 string solution(vector<string> participant, vector<string> completion)
 {
@@ -30,12 +29,11 @@ string solution(vector<string> participant, vector<string> completion)
 
 	for (const std::string& _CurCompletion : completion)
 	{
-		std::unordered_multiset<std::string>::iterator FindIter = ParticipantSet.find(_CurCompletion);
+		std::unordered_multiset<std::string>::const_iterator FindIter = ParticipantSet.find(_CurCompletion);
 
 		if (ParticipantSet.end() == FindIter)
 		{
-			answer = _CurCompletion;
-			break;
+			return _CurCompletion;
 		}
 
 		ParticipantSet.erase(FindIter);
@@ -49,7 +47,7 @@ string solution(vector<string> participant, vector<string> completion)
 	return answer;
 }
 
-
+#include <string_view>
 // string string_viewsolution(vector<string> participant, vector<string> completion)
 // {
 // 	string answer = "";
