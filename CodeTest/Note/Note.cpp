@@ -3,7 +3,7 @@
 
 int main()
 {
-	int InputValue = 101;
+	std::vector<int> InputVector = { 1,10,20,50,70 };
 	TIME_UNIT ATime = CheckFunctionTime([&]()
 		{
 		});
