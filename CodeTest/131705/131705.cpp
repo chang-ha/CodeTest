@@ -4,7 +4,7 @@
 using namespace std;
 
 // 3 <= number <= 13 -> vector(Input)의 길이는 작음
-// -1000 <= number의 원소<= 1000 -> vector의 value는 큼
+// Input이 작으니까 브루트 포스 알고리즘
 #include <algorithm>
 int solution(vector<int> number) 
 {
