@@ -12,7 +12,9 @@ string Othersolution(vector<string> participant, vector<string> completion) {
 	for (int i = 0; i < Completion_Size; i++)
 	{
 		if (participant[i] != completion[i])
+		{
 			return participant[i];
+		}
 	}
 	return participant[participant.size() - 1];
 }

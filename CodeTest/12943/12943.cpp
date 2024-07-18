@@ -1,7 +1,7 @@
 #include <string>
 #include <vector>
 
-// if - else 와 ternary operator 간 차이 거의 X
+// if - else 와 ternary operator(삼항연산자) 간 차이 거의 X
 using namespace std;
 int solution(int num)
 {
@@ -28,7 +28,7 @@ int solution(int num)
 	return answer;
 }
 
-int Thridoperatorsolution(int num)
+int TernaryOperator_solution(int num)
 {
 	int answer = 0;
 	long long lnum = static_cast<long long>(num);
