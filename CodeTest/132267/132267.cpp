@@ -28,15 +28,15 @@ int Whilesolution(int a, int b, int n)
     if (b > a)
     {
         // infinite loop
-        return answer;
+        return -1;
     }
 
     while (n >= a)
     {
-        int GiveBackBottle = n / a * b;
+        int PayBackBottle = n / a * b;
         int RemainBottle = n % a;
-        answer += GiveBackBottle;
-        n = GiveBackBottle + RemainBottle;
+        answer += PayBackBottle;
+        n = PayBackBottle + RemainBottle;
     }
 
     return answer;

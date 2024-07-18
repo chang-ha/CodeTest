@@ -23,27 +23,37 @@ string Othersolution(vector<string> participant, vector<string> completion) {
 string solution(vector<string> participant, vector<string> completion)
 {
 	string answer = "";
+
+	// 참가자를 u_map에 담기
 	std::unordered_multiset<std::string> ParticipantSet;
 	for (const std::string& _CurParticipant : participant)
 	{
 		ParticipantSet.insert(_CurParticipant);
 	}
 
+	// 현재 완주자
 	for (const std::string& _CurCompletion : completion)
 	{
 		std::unordered_multiset<std::string>::const_iterator FindIter = ParticipantSet.find(_CurCompletion);
 
+		// 찾아서 없으면 return
 		if (ParticipantSet.end() == FindIter)
 		{
 			return _CurCompletion;
 		}
 
+		// 있으면 참가자 명단에서 제외
 		ParticipantSet.erase(FindIter);
 	}
 
 	if (false == ParticipantSet.empty())
 	{
 		answer = *ParticipantSet.begin();
+	}
+	else
+	{
+		// Error
+		// 모든 참가자가 완주함
 	}
 
 	return answer;
