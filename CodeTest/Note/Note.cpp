@@ -1,18 +1,14 @@
 #include <TimeCheck\TimeCheck.h>
-#include <string>
-#include <vector>
 
 using namespace std;
 
-#include <algorithm>
-string solution(string my_string, vector<vector<int>> queries)
+int solution(vector<int> numbers)
 {
-	string answer = my_string;
-	int String_Size = static_cast<int>(my_string.size());
+	int answer = 45; // sum of 0 ~ 9
 
-	for (const std::vector<int>& _CurQueries : queries)
+	for (const int _CurValue : numbers)
 	{
-		std::reverse(answer.begin() + _CurQueries[0], answer.begin() + _CurQueries[1] + 1);
+		answer -= _CurValue;
 	}
 
 	return answer;
@@ -20,9 +16,9 @@ string solution(string my_string, vector<vector<int>> queries)
 
 int main()
 {
+	solution({1,2,3,4,6,7,8,0});
 	TIME_UNIT ATime = CheckFunctionTime([&]()
 		{
-			solution("rermgorpsam", {{2, 3}, { 0, 7 }, { 5, 9 }, { 6, 10 }});
 		});
 
 	TIME_UNIT BTime = CheckFunctionTime([&]()
