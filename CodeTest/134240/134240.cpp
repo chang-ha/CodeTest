@@ -19,6 +19,8 @@ string solution(vector<int> food)
 
 	for (int i = 1; i < Food_Size; i++)
 	{
+		// 1 -> 4개
+		// string 2개에 2개씩
 		int AppendCount = food[i] / 2;
 		int AppendChar = '0' + i;
 		answer.append(AppendCount, AppendChar);
