@@ -3,6 +3,113 @@
 
 using namespace std;
 
+#include <unordered_map>
+int usolution(string s)
+{
+	std::string StringAnswer = "";
+	std::unordered_map<std::string, char> NumberMap = {
+		{"zero", '0'},
+		{"one", '1'},
+		{"two", '2'} ,
+		{"three", '3'} ,
+		{"four", '4'} ,
+		{"five", '5'} ,
+		{"six", '6'} ,
+		{"seven", '7'} ,
+		{"eight", '8'} ,
+		{"nine", '9'} };
+
+	std::string::const_iterator StartIter = s.begin();
+	std::string::const_iterator EndIter = s.end();
+
+	for (; StartIter != EndIter;)
+	{
+		if (0 != std::isdigit(*StartIter))
+		{
+			StringAnswer += *StartIter;
+			++StartIter;
+			continue;
+		}
+
+		std::string NumberString = "";
+		int StringLength = 0;
+
+		switch (*StartIter)
+		{
+		case 'z':
+			// zero
+			StringLength = 4;
+			break;
+		case 'o':
+			// one
+			StringLength = 3;
+			break;
+		case 't':
+			// two three
+		{
+			std::string::const_iterator SecondIter = StartIter + 1;
+			switch (*SecondIter)
+			{
+			case 'w':
+				StringLength = 3;
+				break;
+			case 'h':
+				StringLength = 5;
+				break;
+			default:
+				return -1;
+				break;
+			}
+			break;
+		}
+		case 'f':
+			// four five
+			StringLength = 4;
+			break;
+		case 's':
+			// six seven
+		{
+			std::string::const_iterator SecondIter = StartIter + 1;
+			switch (*SecondIter)
+			{
+			case 'i':
+				StringLength = 3;
+				break;
+			case 'e':
+				StringLength = 5;
+				break;
+			default:
+				return -1;
+				break;
+			}
+			break;
+		}
+		case 'e':
+			// eight
+			StringLength = 5;
+			break;
+		case 'n':
+			// nine
+			StringLength = 4;
+			break;
+		default:
+			// Error
+			return -1;
+			break;
+		}
+
+		NumberString.append(StartIter, StartIter + StringLength);
+		StartIter += StringLength;
+
+		if (NumberMap.end() != NumberMap.find(NumberString))
+		{
+			StringAnswer += NumberMap[NumberString];
+		}
+	}
+
+	return std::stoi(StringAnswer);
+}
+
 #include <map>
 int solution(string s)
 {
