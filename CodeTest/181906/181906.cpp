@@ -3,23 +3,17 @@
 
 using namespace std;
 
-#include <set>
-int solution(string my_string, string is_suffix)
+int solution(string my_string, string is_prefix)
 {
-    std::set<string> Subset;
+	size_t Prefix_Size = is_prefix.size();
+	if (my_string.size() < Prefix_Size)
+	{
+		return 0;
+	}
 
-    size_t String_Size = my_string.size();
-    for (size_t i = 0; i < String_Size; i++)
-    {
-        Subset.insert(my_string.substr(0, i));
-    }
-
-    if (Subset.end() == Subset.find(is_suffix))
-    {
-        return 0;
-    }
-    else
-    {
-        return 1;
-    }
+	if (my_string.substr(0, Prefix_Size) == is_prefix)
+	{
+		return 1;
+	}
+	return 0;
 }
