@@ -8,7 +8,7 @@ int main()
 
 	TIME_UNIT BTime = CheckFunctionTime([&]()
 		{
-		});
+        });
 
 	TIME_UNIT CTime = CheckFunctionTime([&]()
 		{
