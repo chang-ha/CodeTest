@@ -57,7 +57,9 @@ public:
 bool compare(Player a, Player b) 
 {
 	if (Checker::comparator(a, b) == -1)
+	{
 		return false;
+	}
 	return true;
 }
 

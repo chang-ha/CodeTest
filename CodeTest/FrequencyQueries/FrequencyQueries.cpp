@@ -7,6 +7,7 @@ string rtrim(const string&);
 vector<string> split(const string&);
 
 // Complete the freqQuery function below.
+#include <unordered_map>
 vector<int> freqQuery(vector<vector<int>> queries)
 {
 	std::unordered_map<int, int> Value_FrequencyMap;
