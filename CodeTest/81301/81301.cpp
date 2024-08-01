@@ -7,6 +7,8 @@ using namespace std;
 int usolution(string s)
 {
 	std::string StringAnswer = "";
+
+	// string과 char 맵핑
 	std::unordered_map<std::string, char> NumberMap = {
 		{"zero", '0'},
 		{"one", '1'},
@@ -24,6 +26,7 @@ int usolution(string s)
 
 	for (; StartIter != EndIter;)
 	{
+		// 현재 char가 숫자인지 판단
 		if (0 != std::isdigit(*StartIter))
 		{
 			StringAnswer += *StartIter;
@@ -34,6 +37,7 @@ int usolution(string s)
 		std::string NumberString = "";
 		int StringLength = 0;
 
+		// 1, 2번째 글자에 따라 길이 판단
 		switch (*StartIter)
 		{
 		case 'z':
@@ -98,11 +102,15 @@ int usolution(string s)
 			break;
 		}
 
+		// 글자 길이 만큼 NumberString에 저장
 		NumberString.append(StartIter, StartIter + StringLength);
+		// 글자 길이 만큼 이동
 		StartIter += StringLength;
 
+		// NumberString이 맵핑한 값이 있는지 판단
 		if (NumberMap.end() != NumberMap.find(NumberString))
 		{
+			// 맵핑되는 char값 추가
 			StringAnswer += NumberMap[NumberString];
 		}
 	}
@@ -222,8 +230,8 @@ int solution(string s)
 // 약 8배 차이남
 #include <regex>
 int Regexsolution(string s) {
-	s = regex_replace(s, regex("zero"), "0");
-	s = regex_replace(s, regex("one"), "1");
+	s = regex_replace(s, regex("zero"), "0"); // string 에서 "zero" 를 전부 찾아서 "0" 으로 치환
+	s = regex_replace(s, regex("one"), "1"); // 위와 동일 ...
 	s = regex_replace(s, regex("two"), "2");
 	s = regex_replace(s, regex("three"), "3");
 	s = regex_replace(s, regex("four"), "4");

@@ -3,7 +3,6 @@
 
 using namespace std;
 
-// X를 긴 길이로 통일
 int solution(vector<vector<int>> sizes)
 {
     size_t Vector_Size = sizes.size();
@@ -13,6 +12,8 @@ int solution(vector<vector<int>> sizes)
         return 0;
     }
 
+    // X, Y중에서
+    // X를 긴 길이로 통일 << 규칙 지정
     int X_Length = 0;
     int Y_Length = 0;
 

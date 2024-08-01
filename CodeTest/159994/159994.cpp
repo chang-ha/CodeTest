@@ -3,13 +3,39 @@
 
 using namespace std;
 
+string Vectorsolution(vector<string> cards1, vector<string> cards2, vector<string> goal)
+{
+    string answer = "Yes";
+
+    int Cards1_Index = 0;
+    int Cards2_Index = 0;
+
+    for (const std::string& _CurWord : goal)
+    {
+        if (_CurWord == cards1[Cards1_Index])
+        {
+            ++Cards1_Index;
+        }
+        else if (_CurWord == cards2[Cards2_Index])
+        {
+            ++Cards2_Index;
+        }
+        else
+        {
+            answer = "No";
+            return answer;
+        }
+    }
+
+    return answer;
+}
+
 #include <queue>
-string solution(vector<string> cards1, vector<string> cards2, vector<string> goal)
+string Queuesolution(vector<string> cards1, vector<string> cards2, vector<string> goal)
 {
     string answer = "Yes";
 
     std::queue<std::string> Cards1_Queue;
-
     for (const std::string& _CurWord : cards1)
     {
         Cards1_Queue.push(_CurWord);
