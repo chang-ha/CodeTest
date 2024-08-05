@@ -4,6 +4,7 @@
 using namespace std;
 
 #include <unordered_set>
+#include <iostream>
 string Vectorsolution(vector<string> survey, vector<int> choices)
 {
     size_t Survey_Size = survey.size();
@@ -45,6 +46,14 @@ string Vectorsolution(vector<string> survey, vector<int> choices)
         }
     }
 
+    // try
+    // {
+    //     Score.at('R' - 'A') >= Score.at('T' - 'A') ? answer += 'R' : answer += 'T';
+    // }
+    // catch (const std::exception& except)
+    // {
+    //     std::cout << "Error : " << except.what() << std::endl;
+    // }
     Score.at('R' - 'A') >= Score.at('T' - 'A') ? answer += 'R' : answer += 'T';
     Score.at('C' - 'A') >= Score.at('F' - 'A') ? answer += 'C' : answer += 'F';
     Score.at('J' - 'A') >= Score.at('M' - 'A') ? answer += 'J' : answer += 'M';

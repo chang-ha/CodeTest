@@ -49,12 +49,14 @@ string Queuesolution(vector<string> cards1, vector<string> cards2, vector<string
 
     for (const std::string& _PopWord : goal)
     {
-        if (_PopWord == Cards1_Queue.front())
+        if (false == Cards1_Queue.empty() 
+            && _PopWord == Cards1_Queue.front())
         {
             Cards1_Queue.pop();
             continue;
         }
-        else if (_PopWord == Cards2_Queue.front())
+        else if (false == Cards1_Queue.empty()
+            && _PopWord == Cards2_Queue.front())
         {
             Cards2_Queue.pop();
             continue;
