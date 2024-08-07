@@ -1,7 +1,4 @@
 #include <TimeCheck\TimeCheck.h>
-#include <string>
-#include <vector>
-
 
 int main()
 {
