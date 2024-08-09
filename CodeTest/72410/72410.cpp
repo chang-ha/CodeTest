@@ -24,8 +24,7 @@ std::string solution(std::string new_id)
 	for (const char _CurChar : answer)
 	{
 		if ('.' == _CurChar &&
-			(true == CalcuString.empty() || '.' == CalcuString.back())
-			)
+			(true == CalcuString.empty() || '.' == CalcuString.back()))
 		{
 			continue;
 		}
