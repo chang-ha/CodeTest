@@ -36,7 +36,12 @@ vector<int> solution(int N, vector<int> stages)
 
 		UserCount -= StageUserCount[PrevStage];
 		// i 스테이지에 막힌 유저 수 / i 스테이지에 도달한 유저 수 (전체 유저 - 이전 스테이지에 막힌 유저 수)
-		float StageFailRatio = static_cast<float>(StageUserCount[i]) / UserCount;
+		float StageFailRatio = 0.f;
+		if (0 < UserCount)
+		{
+			StageFailRatio = static_cast<float>(StageUserCount[i]) / UserCount;
+		}
+
 		FailRatio[StageFailRatio].insert(i);
 	}
 
