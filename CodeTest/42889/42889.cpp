@@ -4,6 +4,7 @@
 using namespace std;
 #include <map>
 #include <set>
+
 vector<int> solution(int N, vector<int> stages)
 {
 	vector<int> answer;
