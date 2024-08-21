@@ -35,7 +35,7 @@ public:
 	~BytePaddingConsider() = default;
 
 private:
-	char C = '1'; // 1바이트
+	char C = '1'; // 1바이트 (+ 1바이트 패딩)
 	short E = 1; // 2바이트
 	int A = 1; // 4바이트
 	// BytePadding으로 인해 8바이트 차지
@@ -53,11 +53,11 @@ public:
 	~BytePaddingNotConsider() = default;
 
 private:
-	int A = 1; // 8바이트 차지
+	int A = 1; // 8바이트 차지 (4바이트 패딩)
 	long long B = 1; // 8바이트 차지
-	char C = '1'; // 8바이트 차지
+	char C = '1'; // 8바이트 차지 (7바이트 패딩)
 	double D = 1.0; // 8바이트 차지
-	short E = 1; // 8바이트 차지
+	short E = 1; // 8바이트 차지 (6바이트 패딩)
 	long long F = 1; // 8바이트 차지
 	// 총 48바이트
 };
@@ -91,6 +91,7 @@ class CantAdjustBytePadding
 	alignas(4) char a;  // 4바이트 경계로 정렬 시도
 	char c;
 	long long b; // 8바이트 자료형이 존재
+	// 가장 엄격한(크기가 큰) 바이트로 패딩
 	// 16바이트
 };
 
@@ -109,6 +110,10 @@ int main()
 	// 64bit -> 32byte (24byte에서 bytepadding으로 인해 32byte)
  	size_t A_Size = sizeof(A);
 
+	BytePaddingConsider* BPC = new BytePaddingConsider();
+	delete BPC;
+	BytePaddingNotConsider* BPNC = new BytePaddingNotConsider();
+	delete BPNC;
 	size_t ConsiderBytePadding = sizeof(BytePaddingConsider);
 	size_t NotConsiderBytePadding = sizeof(BytePaddingNotConsider);
 
