@@ -34,7 +34,6 @@ public:
 	BytePaddingConsider() = default;
 	~BytePaddingConsider() = default;
 
-private:
 	char C = '1'; // 1바이트 (+ 1바이트 패딩)
 	short E = 1; // 2바이트
 	int A = 1; // 4바이트
@@ -52,7 +51,6 @@ public:
 	BytePaddingNotConsider() = default;
 	~BytePaddingNotConsider() = default;
 
-private:
 	int A = 1; // 8바이트 차지 (4바이트 패딩)
 	long long B = 1; // 8바이트 차지
 	char C = '1'; // 8바이트 차지 (7바이트 패딩)
@@ -61,6 +59,23 @@ private:
 	long long F = 1; // 8바이트 차지
 	// 총 48바이트
 };
+
+#pragma pack(push, 1)
+class NotBytePadding
+{
+public:
+	NotBytePadding() = default;
+	~NotBytePadding() = default;
+
+	int A = 1; // 4바이트 차지
+	long long B = 1; // 8바이트 차지
+	char C = '1'; // 1바이트 차지
+	double D = 1.0; // 8바이트 차지
+	short E = 1; // 2바이트 차지
+	long long F = 1; // 8바이트 차지
+	// 총 31바이트
+};
+#pragma pack(pop)
 
 //class alignas(8) AdjustBytePadding
 //{
@@ -110,12 +125,16 @@ int main()
 	// 64bit -> 32byte (24byte에서 bytepadding으로 인해 32byte)
  	size_t A_Size = sizeof(A);
 
+	// BytePadding 메모리 확인
 	BytePaddingConsider* BPC = new BytePaddingConsider();
-	delete BPC;
 	BytePaddingNotConsider* BPNC = new BytePaddingNotConsider();
+	NotBytePadding* NBP = new NotBytePadding();
 	delete BPNC;
+	delete BPC;
+	delete NBP;
 	size_t ConsiderBytePadding = sizeof(BytePaddingConsider);
 	size_t NotConsiderBytePadding = sizeof(BytePaddingNotConsider);
+	size_t NotBytePaddingSize = sizeof(NotBytePadding);
 
 	size_t Adjust = sizeof(AdjustBytePadding);
 	size_t NotAdjust = sizeof(NotAdjustBytePadding);
@@ -123,6 +142,12 @@ int main()
 
 	UnalignedData Unalignedarray[10] = {};
 	PaddedData Paddedarray[10] = {};
+
+	constexpr size_t BytePaddingLoopCount = 10000;
+
+	NotBytePadding mNotBytePadding;
+	BytePaddingNotConsider mBytePaddingNotConsider;
+	BytePaddingConsider mBytePaddingConsider;
 
 	TIME_UNIT ATime = CheckFunctionTime([&]()
 		{
@@ -148,10 +173,32 @@ int main()
 
 	TIME_UNIT CTime = CheckFunctionTime([&]()
 		{
+			// Not consider Byte Padding
+			for (size_t i = 0; i < BytePaddingLoopCount; i++)
+			{
+				mBytePaddingNotConsider.B = LLONG_MAX - i;
+				mBytePaddingNotConsider.F = LLONG_MAX - i;
+			}
 		});
 
 	TIME_UNIT DTime = CheckFunctionTime([&]()
 		{
+			// Not Byte Padding(#pragma pack)
+			for (size_t i = 0; i < BytePaddingLoopCount; i++)
+			{
+				mNotBytePadding.B = LLONG_MAX - i;
+				mNotBytePadding.F = LLONG_MAX - i;
+			}
+		});
+
+	TIME_UNIT ETime = CheckFunctionTime([&]()
+		{
+			// consider Byte Padding
+			for (size_t i = 0; i < BytePaddingLoopCount; i++)
+			{
+				mBytePaddingConsider.B = LLONG_MAX - i;
+				mBytePaddingConsider.F = LLONG_MAX - i;
+			}
 		});
 
 	int x = 0;
