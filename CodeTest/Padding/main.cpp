@@ -145,61 +145,65 @@ int main()
 
 	constexpr size_t BytePaddingLoopCount = 10000;
 
-	NotBytePadding mNotBytePadding;
-	BytePaddingNotConsider mBytePaddingNotConsider;
-	BytePaddingConsider mBytePaddingConsider;
+	NotBytePadding* mNotBytePadding = new NotBytePadding();
+	BytePaddingNotConsider* mBytePaddingNotConsider = new BytePaddingNotConsider();
+	BytePaddingConsider* mBytePaddingConsider = new BytePaddingConsider();
 
-	TIME_UNIT ATime = CheckFunctionTime([&]()
-		{
-			for (size_t i = 0; i < 10; i++)
-			{
-				for (size_t j = 0; j < LoopCount; j++)
-				{
-					Unalignedarray[i].data[j] = char(j);
-				}
-			}
-		});
+	//TIME_UNIT ATime = CheckFunctionTime([&]()
+	//	{
+	//		for (size_t i = 0; i < 10; i++)
+	//		{
+	//			for (size_t j = 0; j < LoopCount; j++)
+	//			{
+	//				Unalignedarray[i].data[j] = char(j);
+	//			}
+	//		}
+	//	});
 
-	TIME_UNIT BTime = CheckFunctionTime([&]()
-		{
-			for (size_t i = 0; i < 10; i++)
-			{
-				for (size_t j = 0; j < LoopCount; j++)
-				{
-					Paddedarray[i].data[j] = char(j);
-				}
-			}
-		});
+	//TIME_UNIT BTime = CheckFunctionTime([&]()
+	//	{
+	//		for (size_t i = 0; i < 10; i++)
+	//		{
+	//			for (size_t j = 0; j < LoopCount; j++)
+	//			{
+	//				Paddedarray[i].data[j] = char(j);
+	//			}
+	//		}
+	//	});
 
+	// 간단한 실험으로는 바이트 패딩에 의한 실행시간 차이 크게 느낄 수 없음
+	// 메모리 차이는 확실히 존재
+	// 이론적으로는 바이트 패딩을 통한 메모리 정렬이 CPU의 오버헤드를 줄일 수 있음
 	TIME_UNIT CTime = CheckFunctionTime([&]()
 		{
 			// Not consider Byte Padding
 			for (size_t i = 0; i < BytePaddingLoopCount; i++)
 			{
-				mBytePaddingNotConsider.B = LLONG_MAX - i;
-				mBytePaddingNotConsider.F = LLONG_MAX - i;
+				mBytePaddingNotConsider->B = LLONG_MAX - i;
+				mBytePaddingNotConsider->F = LLONG_MAX - i;
 			}
 		});
 
-	TIME_UNIT DTime = CheckFunctionTime([&]()
-		{
-			// Not Byte Padding(#pragma pack)
-			for (size_t i = 0; i < BytePaddingLoopCount; i++)
-			{
-				mNotBytePadding.B = LLONG_MAX - i;
-				mNotBytePadding.F = LLONG_MAX - i;
-			}
-		});
 
 	TIME_UNIT ETime = CheckFunctionTime([&]()
 		{
 			// consider Byte Padding
 			for (size_t i = 0; i < BytePaddingLoopCount; i++)
 			{
-				mBytePaddingConsider.B = LLONG_MAX - i;
-				mBytePaddingConsider.F = LLONG_MAX - i;
+				mBytePaddingConsider->B = LLONG_MAX - i;
+				mBytePaddingConsider->F = LLONG_MAX - i;
 			}
 		});
 
+
+	TIME_UNIT DTime = CheckFunctionTime([&]()
+		{
+			// Not Byte Padding(#pragma pack)
+			for (size_t i = 0; i < BytePaddingLoopCount; i++)
+			{
+				mNotBytePadding->B = LLONG_MAX - i;
+				mNotBytePadding->F = LLONG_MAX - i;
+			}
+		});
 	int x = 0;
 }
