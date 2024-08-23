@@ -3,7 +3,6 @@
 
 using namespace std;
 
-
 vector<int> solution(vector<string> park, vector<string> routes)
 {
     vector<int> answer;
@@ -12,12 +11,14 @@ vector<int> solution(vector<string> park, vector<string> routes)
     size_t Park_ColSize = park.size();
     for (size_t Start_YPos = 0; Start_YPos < Park_ColSize; Start_YPos++)
     {
+        // 시작 위치를 탐색
         size_t Start_XPos = park[Start_YPos].find_first_of("S");
         if (std::string::npos == Start_XPos)
         {
             continue;
         }
 
+        // S가 또 있으면 Error
         size_t Check_Another_S = park[Start_YPos].find_last_of("S");
         if (Check_Another_S != Start_XPos)
         {
@@ -25,6 +26,7 @@ vector<int> solution(vector<string> park, vector<string> routes)
             return answer;
         }
 
+        // 시작 위치를 answer에 삽입
         if (-1 == answer[0])
         {
             answer[0] = static_cast<int>(Start_YPos);
@@ -32,10 +34,12 @@ vector<int> solution(vector<string> park, vector<string> routes)
         }
         else
         {
+            // 시작 위치가 2개면 Error
             // Error
             return answer;
         }
     }
+
 
     vector<int> DestinationPos(2);
     for (const std::string& _CurRoute : routes)
