@@ -3,25 +3,63 @@
 
 using namespace std;
 
-#include <algorithm>
-int solution(int n, vector<int> lost, vector<int> reserve) 
+#include <set>
+int solution(int n, vector<int> lost, vector<int> reserve)
 {
-    int answer = static_cast<int>(reserve.size());
+	// sort 및 원할한 중복제거를 위한 set 사용
+	std::set<int> lost_set(lost.begin(), lost.end());
+	std::set<int> reserve_set(reserve.begin(), reserve.end());
 
-	std::sort(lost.begin(), lost.end());
-	std::sort(reserve.begin(), reserve.end());
+	std::set<int>::const_iterator StartIter = lost_set.begin();
+	std::set<int>::const_iterator EndIter = lost_set.end();
 
-	int PrevIndex = 0;
-	for (const int _BorrowPeople : lost)
+	// lost와 reserve의 중복 제거
+	for (; StartIter != EndIter;)
 	{
-		int LendPeople = reserve[PrevIndex];
-		if (LendPeople - 1 == _BorrowPeople ||
-			LendPeople + 1 == _BorrowPeople)
+		if (0 != reserve_set.erase(*StartIter))
+		{
+			StartIter = lost_set.erase(StartIter);
+			continue;
+		}
+		++StartIter;
+	}
+
+	// 전체 n - lost 학생 수 
+	int answer = n - static_cast<int>(lost_set.size());
+
+	vector<bool> Student(n + 1, 1);
+
+	// Student 중 lost인 사람을 false
+	for (const int LostPeople : lost_set)
+	{
+		Student[LostPeople] = false;
+	}
+
+	for (const int BorrowPeople : reserve_set)
+	{
+		int PrevStudent = BorrowPeople - 1;
+
+		// 앞 사람이 잃어버렸는지 체크
+		if (false == Student[PrevStudent])
 		{
 			++answer;
-			++PrevIndex;
+			Student[PrevStudent] = true;
+			continue;
+		}
+
+		int NextStudent = BorrowPeople + 1;
+		if (n < NextStudent)
+		{
+			break;
+		}
+
+		// 뒷 사람이 잃어버렸는지 체크
+		if (false == Student[NextStudent])
+		{
+			++answer;
+			Student[NextStudent] = true;
 		}
 	}
 
-    return answer;
+	return answer;
 }
