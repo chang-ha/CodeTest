@@ -1,5 +1,6 @@
 #include <TimeCheck\TimeCheck.h>
 
+#include <iostream>
 int main()
 {
 	TIME_UNIT ATime = CheckFunctionTime([&]()
@@ -14,14 +15,18 @@ int main()
 		{
 		});
 
+	TIME_UNIT DTime = CheckFunctionTime([&]()
+		{
+		});
 
 	TIME_UNIT ETime = CheckFunctionTime([&]()
 		{
 		});
 
-
-	TIME_UNIT DTime = CheckFunctionTime([&]()
-		{
-		});
+	std::cout << "ATime is " << ATime.count() << " microseconds" << std::endl;
+	std::cout << "BTime is " << BTime.count() << " microseconds" << std::endl;
+	std::cout << "CTime is " << CTime.count() << " microseconds" << std::endl;
+	std::cout << "DTime is " << DTime.count() << " microseconds" << std::endl;
+	std::cout << "ETime is " << ETime.count() << " microseconds" << std::endl;
 	int x = 0;
 }
