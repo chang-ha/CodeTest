@@ -88,8 +88,14 @@ int main()
 		std::cout << "Main Thread get lock" << std::endl;
 	}
 
-	T1.join();
-	T2.join();
-	T3.join();
+	// thread는 join or detach 중 하나를 해줘야함
+	// join -> thread가 종료될 때 까지 대기
+	// detach -> thread를 백그라운드로 분리 (프로세스 종료시 무조건 종료)
+	// T1.join();
+	// T2.join();
+	// T3.join();
+	T1.detach();
+	T2.detach();
+	T3.detach();
 	int x = 0;
 }
