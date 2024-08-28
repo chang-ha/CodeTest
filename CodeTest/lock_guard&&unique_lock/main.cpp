@@ -54,6 +54,7 @@ void Function2()
 
 	// try_to_lock : mutex에 lock 시도
 	// 공부 추가 필요
+	// condition_variable 프로젝트로 
 	std::unique_lock tlock(Key2, std::try_to_lock);
 	bool LockSuccess = false;
 	if (false == tlock.owns_lock())

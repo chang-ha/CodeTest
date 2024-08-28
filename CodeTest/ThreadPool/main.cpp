@@ -38,7 +38,7 @@ private:
 	//	 3. 가장 간단한 업무 처리
 	// 등등...
 	// race condition(경쟁 상태) 문제 해결 필요
-	//   1. Mutual exclsuion (상호 배제) -> 한 쓰레드가 공용 데이터를 사용중이면 다른 쓰레드가 사용하지 못하게 막는 문제
+	//   1. Mutual exclsuion (상호 배제 == mutex) -> 한 쓰레드가 공용 데이터를 사용중이면 다른 쓰레드가 사용하지 못하게 막는 문제
 	//	 2. Dead Lock (데드락)
 	//			(1) 두 쓰레드가 각각 2개 이상의 자원을 필요로 하는데, 서로 1개씩 가지고 있는 경우
 	//			(2) 다른 쓰레드가 영구히 Lock을 해제하지 않는 경우
@@ -78,7 +78,10 @@ int main()
 		std::cout << "thread job push 실패" << std::endl;
 	}
 
-	tThreadPool.Pushjob(std::bind(Calcu_Add, 1, 2));
+	int A = 1;
+	int B = 1;
+	tThreadPool.Pushjob(std::bind(Calcu_Add, std::ref(A), std::ref(B)));
+	tThreadPool.Pushjob(std::bind(Calcu_Add, A, B));
 
 	tThreadPool.EndThreadPool();
 
@@ -185,7 +188,7 @@ auto ThreadPool::enqueue(F&& f, Args&&... args)
 
 	{
 		std::unique_lock<std::mutex> tlock(queue_mutex);
-		this->tasks
+		this->tasks.push();
 	}
 
 	// 업무가 들어왔으니 대기중인 쓰레드 1개 꺠움
