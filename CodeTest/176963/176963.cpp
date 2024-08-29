@@ -9,7 +9,7 @@ vector<int> solution(vector<string> name, vector<int> yearning, vector<vector<st
     vector<int> answer;
 
     // 이름과 점수 사이즈 차이 존재시 에러
-    size_t yearning_size = yearning.size();
+    const size_t yearning_size = yearning.size();
     if (yearning_size != name.size())
     {
         // Error
@@ -23,7 +23,7 @@ vector<int> solution(vector<string> name, vector<int> yearning, vector<vector<st
         MemoryScore[name[i]] = yearning[i];
     }
 
-    size_t photo_size = photo.size();
+    const size_t photo_size = photo.size();
     answer.resize(photo_size);
     for (size_t i = 0; i < photo_size; i++)
     {
