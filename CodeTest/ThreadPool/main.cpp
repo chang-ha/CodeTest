@@ -14,7 +14,8 @@
 class ThreadPool
 {
 public:
-	ThreadPool(const size_t);
+	// size_t = 0 : Calcu CPU's Total Threads
+	ThreadPool(size_t = 0);
 	~ThreadPool();
 
 	void Pushjob(std::function<void()> job);
@@ -23,7 +24,7 @@ public:
 	// F = 실행함수
 	// Args = 함수 인자 (가변인자)
 	template<class F, class... Args>
-	auto enqueue(F&& f, Args&&... args) 
+	auto enqueue(F&& function, Args&&... args)
 		-> std::future<typename std::result_of<F(Args...)>::type>; // 후행 반환 형식
 
 	void EndThreadPool();
@@ -47,6 +48,7 @@ private:
 	void Threadtask();
 	// race condition 해결 방안으로 1. Mutex, 2. Semaphore가 존재
 	// 여기선 Mutex 사용
+	// 재귀 필요 시 recursive_mutex
 	std::mutex queue_mutex;
 	std::condition_variable condition;
 	bool Stop;
@@ -62,7 +64,7 @@ int Calcu_Add(int A, int B)
 
 int main()
 {
-	ThreadPool tThreadPool(4);
+	ThreadPool tThreadPool;
 
 	try
 	{
@@ -77,11 +79,6 @@ int main()
 		std::cout << _errorMessage.what() << std::endl;
 		std::cout << "thread job push 실패" << std::endl;
 	}
-
-	int A = 1;
-	int B = 1;
-	tThreadPool.Pushjob(std::bind(Calcu_Add, std::ref(A), std::ref(B)));
-	tThreadPool.Pushjob(std::bind(Calcu_Add, A, B));
 
 	tThreadPool.EndThreadPool();
 
@@ -139,9 +136,22 @@ void ThreadPool::Threadtask()
 	}
 }
 
-inline ThreadPool::ThreadPool(const size_t thread_count)
+#include <Windows.h>
+inline ThreadPool::ThreadPool(size_t thread_count)
 	: Stop(false)
 {
+	// 자동으로 CPU 스레드 갯수( != CPU core 갯수)를 참고해서 thread 생성
+	// 내 컴퓨터의 경우
+	// 성능 코어 4 + 효율 코어 8개 = 총 12개 코어
+	// 총 스레드 = 16 (하이퍼 스레딩 적용)
+	if (0 == thread_count)
+	{
+		SYSTEM_INFO sysinfo;
+		GetSystemInfo(&sysinfo);
+		// 총 스레드
+		thread_count = sysinfo.dwNumberOfProcessors;
+	}
+
 	Workers.reserve(thread_count);
 	for (size_t i = 0; i < thread_count; i++)
 	{
@@ -176,19 +186,25 @@ void ThreadPool::Pushjob(std::function<void()> job)
 }
 
 template<class F, class... Args>
-auto ThreadPool::enqueue(F&& f, Args&&... args)
+auto ThreadPool::enqueue(F&& function, Args&&... args)
 	-> std::future<typename std::result_of<F(Args...)>::type>
 {
-	using FunctionReturn = typename std::result_of<F(Args...)>::type;
-
 	if (true == Stop)
 	{
 		std::runtime_error("ThreadPool 정지 중");
 	}
 
+	// promise와 future 사용
+	// 여러 thread가 공유필요시 std::shared_future 사용 (여기선 필요 X)
+	using FunctionReturn = typename std::result_of<F(Args...)>::type; 
+	// == std::future<return type of function> == function의 리턴값
+
 	{
 		std::unique_lock<std::mutex> tlock(queue_mutex);
-		this->tasks.push();
+		tasks.push([function, args...]()
+			{
+				function(args...);
+			});
 	}
 
 	// 업무가 들어왔으니 대기중인 쓰레드 1개 꺠움

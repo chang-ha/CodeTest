@@ -1,8 +1,6 @@
 #include <TimeCheck\TimeCheck.h>
-
-using namespace std;
-
 #include <iostream>
+
 int main()
 {
 	TIME_UNIT ATime = CheckFunctionTime([&]()

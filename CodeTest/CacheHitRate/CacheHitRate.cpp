@@ -2,7 +2,7 @@
 #include <chrono>
 
 const int N = 1024;
-int array[N][N];
+int array[N][N]; // 4 * 1024 * 1024 = 4MB
 
 // 열단위로 접근은 확실한 차이를 보임 (캐시 적중률 차이 O)
 // 열 단위로 접근은 불연속적 메모리에 접근하기 때문에 캐시 적중률 차이 O
@@ -24,7 +24,7 @@ void accessArrayColumnMajor() {
     }
 }
 
-long long array2[N][N];
+long long array2[N][N]; // 8MB
 long long array3[N][N];
 long long array4[N][N];
 long long array5[N][N];
@@ -40,8 +40,6 @@ long long array14[N][N];
 long long array15[N][N];
 long long array16[N][N];
 
-// 같은 행과 열에서 역으로 접근하는건 큰 차이가 없음(캐시 적중률 차이 X)
-// CPU 캐시는 블록단위로 데이터를 가져오기 때문에, 역순으로 접근한다 해도 같은 블록에 데이터가 존재하기 때문에 캐시 적중률 차이 X
 void anotherArrayAccess()
 {
     for (int i = 0; i < N; i++)
@@ -67,6 +65,8 @@ void anotherArrayAccess()
     }
 }
 
+// 같은 행과 열에서 역으로 접근하는건 큰 차이가 없음(캐시 적중률 차이 X)
+// CPU 캐시는 블록단위로 데이터를 가져오기 때문에, 역순으로 접근한다 해도 같은 블록에 데이터가 존재하기 때문에 캐시 적중률 차이 X
 void accessArrayForward()
 {
     for (int i = 0; i < N; i++) {
