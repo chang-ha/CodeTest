@@ -27,7 +27,9 @@ public:
 	auto enqueue(F&& function, Args&&... args)
 		-> std::future<typename std::result_of<F(Args...)>::type>; // 후행 반환 형식
 
-	void EndThreadPool();
+	template <class F, class... Args>
+	std::future<typename std::result_of<F(Args...)>::type> OthersEnqueueJob(
+		F f, Args... args);
 
 private:
 	std::vector<std::thread> Workers;
@@ -51,6 +53,7 @@ private:
 	// 재귀 필요 시 recursive_mutex
 	std::mutex queue_mutex;
 	std::condition_variable condition;
+	void EndThreadPool();
 	bool Stop;
 };
 
@@ -62,38 +65,65 @@ int Calcu_Add(int A, int B)
 	return Result;
 }
 
+int Infinity()
+{
+	int a = 0;
+	while (a < 1000)
+	{
+		++a;
+		std::cout << "while Looping\n";
+	}
+	return a;
+}
+
+void voidInfinity()
+{
+	for (size_t i = 0; i < 100; i++)
+	{
+
+	}
+}
+
 int main()
 {
 	ThreadPool tThreadPool;
 
-	try
-	{
-		tThreadPool.Pushjob([]()
-			{
-				std::cout << "thread 업무 중" << std::endl;
-			});
-		std::cout << "thread jou push 성공" << std::endl;
-	}
-	catch (const std::runtime_error& _errorMessage)
-	{
-		std::cout << _errorMessage.what() << std::endl;
-		std::cout << "thread job push 실패" << std::endl;
-	}
+	auto Result = tThreadPool.enqueue(Infinity);
 
-	tThreadPool.EndThreadPool();
+	auto AResult = tThreadPool.enqueue(voidInfinity);
+	Result.wait();
+	int a = 0;
 
-	try
-	{
-		tThreadPool.Pushjob([]()
-			{
-			});
-		std::cout << "thread jou push 성공" << std::endl;
-	}
-	catch (const std::runtime_error& _errorMessage)
-	{
-		std::cout << _errorMessage.what() << std::endl;
-		std::cout << "thread job push 실패" << std::endl;
-	}
+	AResult.wait();
+	int b = 0;
+	//try
+	//{
+	//	tThreadPool.Pushjob([]()
+	//		{
+	//			std::cout << "thread 업무 중" << std::endl;
+	//		});
+	//	std::cout << "thread jou push 성공" << std::endl;
+	//}
+	//catch (const std::runtime_error& _errorMessage)
+	//{
+	//	std::cout << _errorMessage.what() << std::endl;
+	//	std::cout << "thread job push 실패" << std::endl;
+	//}
+
+	//tThreadPool.EndThreadPool();
+
+	//try
+	//{
+	//	tThreadPool.Pushjob([]()
+	//		{
+	//		});
+	//	std::cout << "thread jou push 성공" << std::endl;
+	//}
+	//catch (const std::runtime_error& _errorMessage)
+	//{
+	//	std::cout << _errorMessage.what() << std::endl;
+	//	std::cout << "thread job push 실패" << std::endl;
+	//}
 }
 
 void ThreadPool::Threadtask()
@@ -191,7 +221,7 @@ auto ThreadPool::enqueue(F&& function, Args&&... args)
 {
 	if (true == Stop)
 	{
-		std::runtime_error("ThreadPool 정지 중");
+		throw std::runtime_error("ThreadPool 정지 중");
 	}
 
 	// promise와 future 사용
@@ -199,16 +229,19 @@ auto ThreadPool::enqueue(F&& function, Args&&... args)
 	using FunctionReturn = typename std::result_of<F(Args...)>::type; 
 	// == std::future<return type of function> == function의 리턴값
 
+	// shared_ptr로 task 파괴 방지
+	auto task = std::make_shared<std::packaged_task<FunctionReturn()>>(std::bind(function, args...));
+
+	std::future<FunctionReturn> Result = task->get_future();
+
 	{
 		std::unique_lock<std::mutex> tlock(queue_mutex);
-		tasks.push([function, args...]()
-			{
-				function(args...);
-			});
+		tasks.push([task]() { (*task)(); });
 	}
 
 	// 업무가 들어왔으니 대기중인 쓰레드 1개 꺠움
 	condition.notify_one();
+	return Result;
 }
 
 inline void ThreadPool::EndThreadPool()
