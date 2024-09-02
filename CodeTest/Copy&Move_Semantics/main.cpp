@@ -33,21 +33,25 @@ public:
 		std::cout << "Class Move Assignment" << std::endl;
 	}
 
+	int mValue = 0;
 };
 
+#include <vector>
 int main()
 {
+	std::cout << "size of MyClass : " << sizeof(MyClass) << std::endl;
 	MyClass FirstMyClass;
+	FirstMyClass.mValue = 100;
 
-	std::cout << &FirstMyClass << std::endl;
+	std::cout << "FirstMyClass(Default Constructor) Address : " << &FirstMyClass << std::endl;
 
 	MyClass SecondMyClass = FirstMyClass;
 
-	std::cout << &SecondMyClass << std::endl;
+	std::cout << "SecondMyClass(Copy Constructor) Address : " << &SecondMyClass << std::endl;
 
 	MyClass ThridMyClass = std::move(FirstMyClass);
-	std::cout << &FirstMyClass << std::endl;
-	std::cout << &ThridMyClass << std::endl;
+	std::cout << "FirstMyClass Address :" <<  &FirstMyClass << std::endl;
+	std::cout <<"ThridMyClass(Move Constructor) Address : " << &ThridMyClass << std::endl;
 
 	int a = 0;
 	int&& RRef = 10;
