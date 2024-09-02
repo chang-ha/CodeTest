@@ -1,5 +1,5 @@
-#include <TimeCheck\TimeCheck.h>
 #include <iostream>
+#include <TimeCheck\TimeCheck.h>
 
 int main()
 {

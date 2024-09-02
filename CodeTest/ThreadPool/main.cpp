@@ -27,10 +27,6 @@ public:
 	auto enqueue(F&& function, Args&&... args)
 		-> std::future<typename std::result_of<F(Args...)>::type>; // 후행 반환 형식
 
-	template <class F, class... Args>
-	std::future<typename std::result_of<F(Args...)>::type> OthersEnqueueJob(
-		F f, Args... args);
-
 private:
 	std::vector<std::thread> Workers;
 	// 모든 thread가 접근할 수 있는 업무 컨테이너
@@ -87,15 +83,42 @@ void voidInfinity()
 int main()
 {
 	ThreadPool tThreadPool;
+	std::vector<std::future<int>> futures;
+	for (int i = 0; i < 10; i++) {
+		futures.emplace_back(tThreadPool.enqueue(Calcu_Add, 1, i));
+	}
 
-	auto Result = tThreadPool.enqueue(Infinity);
-
-	auto AResult = tThreadPool.enqueue(voidInfinity);
-	Result.wait();
 	int a = 0;
 
-	AResult.wait();
+	// for (int i = 0; i < 10; i++)
+	// {
+	// 	futures[i].wait();
+	// }
+
+	bool CalcuEnd = false;
+
+	while (false == CalcuEnd)
+	{
+		int futures_size = static_cast<int>(futures.size());
+		for (int i = 0; i < futures_size; i++)
+		{
+			CalcuEnd = futures[i]._Is_ready();
+			if (false == CalcuEnd)
+			{
+				break;
+			}
+			CalcuEnd = true;
+		}
+	}
 	int b = 0;
+	// auto Result = tThreadPool.enqueue(Infinity);
+	// 
+	// auto AResult = tThreadPool.enqueue(voidInfinity);
+	// Result.wait();
+	// int a = 0;
+	// 
+	// AResult.wait();
+	// int b = 0;
 	//try
 	//{
 	//	tThreadPool.Pushjob([]()
