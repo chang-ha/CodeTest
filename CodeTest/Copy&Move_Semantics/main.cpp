@@ -8,6 +8,12 @@ public:
 		std::cout << "Class Default Constructor" << std::endl;
 	}
 
+	MyClass(const int i)
+		: mValue(i)
+	{
+		std::cout << "Class Param Constructor" << std::endl;
+	}
+
 	~MyClass()
 	{
 		std::cout << "Class Destructor" << std::endl;
@@ -54,11 +60,4 @@ int main()
 	std::cout <<"ThridMyClass(Move Constructor) Address : " << &ThridMyClass << std::endl;
 
 	int a = 0;
-	int&& RRef = 10;
-	const int& CRef = 10;
-	// int& Ref = 10;
-	// int&& RRefa = a;
-	RRef = a;
-
-	int b = 0;
 }
