@@ -1,27 +1,8 @@
 #include <iostream>
 #include <TimeCheck\TimeCheck.h>
-#include <string>
-#include <vector>
-
-using namespace std;
-double solution(vector<int> arr)
-{
-	double answer = 0;
-	long long Sum = 0;
-
-	for (const int _CurValue : arr)
-	{
-		Sum += _CurValue;
-	}
-
-	answer = static_cast<double>(Sum) / arr.size();
-
-	return answer;
-}
 
 int main()
 {
-	solution({1,2,3,4,5,6});
 	TIME_UNIT ATime = CheckFunctionTime([&]()
 		{
 		});
