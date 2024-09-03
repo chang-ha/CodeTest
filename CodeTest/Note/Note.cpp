@@ -1,8 +1,10 @@
 #include <iostream>
 #include <TimeCheck\TimeCheck.h>
 
+
 int main()
 {
+	solution(13,17);
 	TIME_UNIT ATime = CheckFunctionTime([&]()
 		{
 		});
