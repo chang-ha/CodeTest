@@ -27,6 +27,7 @@ public:
 	MyClass& operator=(const MyClass& _Other)
 	{
 		std::cout << "Class Copy Assignment" << std::endl;
+		return *this;
 	}
 
 	MyClass(MyClass&& _Ohter) noexcept
@@ -37,6 +38,7 @@ public:
 	MyClass& operator=(MyClass&& _Other) noexcept
 	{
 		std::cout << "Class Move Assignment" << std::endl;
+		return *this;
 	}
 
 	int mValue = 0;

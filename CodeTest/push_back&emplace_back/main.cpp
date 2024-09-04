@@ -9,7 +9,17 @@ public:
 	~MyClass();
 
 	MyClass(const MyClass& _Others) noexcept;
+	MyClass& operator=(const MyClass& _Other)
+	{
+		std::cout << "MyClass 복사 대입 연산자" << std::endl;
+		return *this;
+	}
 	MyClass(MyClass&& _Others) noexcept;
+	MyClass& operator=(MyClass&& _Other) noexcept
+	{
+		std::cout << "MyClass 이동 대입 연산자" << std::endl;
+		return *this;
+	}
 
 private:
 	// 초기화 먼저 적용됨
@@ -47,6 +57,7 @@ MyClass::MyClass(MyClass&& _Others) noexcept
 	_Others.MemberVar = 0;
 	std::cout << "MyClass 이동 생성자 호출" << std::endl;
 }
+
 
 #include <vector>
 int main()
@@ -97,6 +108,13 @@ int main()
 	// 1. 이동 연산
 	Vector.emplace_back(std::move(B));
 	std::cout << "-----------------" << std::endl;
+
+	// 추가사항
+	// vector의 erase
+	// vector의 자료 구조 특성상 중간 멤버를 지우면
+	// 뒤에 존재하는 모든 멤버들을 한 칸씩 땡겨야함
+	std::cout << "*. vector erase" << std::endl;
+	Vector.erase(Vector.begin());
 
 	std::vector<std::vector<int>> DoubleVector;
 	// DoubleVector.push_back(10);
