@@ -60,6 +60,16 @@ MyClass::MyClass(MyClass&& _Others) noexcept
 
 
 #include <vector>
+void Function(std::vector<MyClass> _Vector)
+{
+	int a = 0;
+}
+
+void RefFunction(std::vector<MyClass>& _Vector)
+{
+	int a = 0;
+}
+
 int main()
 {
 	std::vector<MyClass> Vector;
@@ -110,11 +120,19 @@ int main()
 	std::cout << "-----------------" << std::endl;
 
 	// 추가사항
-	// vector의 erase
+	// 1. vector의 erase
 	// vector의 자료 구조 특성상 중간 멤버를 지우면
 	// 뒤에 존재하는 모든 멤버들을 한 칸씩 땡겨야함
 	std::cout << "*. vector erase" << std::endl;
 	Vector.erase(Vector.begin());
+	// 2. Function Parameter
+	
+	// vector의 모든 객체가 복사 되었다가 소멸됨
+	std::cout << "*. Function Call" << std::endl;
+	Function(Vector);
+	// vector의 ref를 parameter로 넘겨주기 때문에 복사와 소멸이 이루어 지지 않음
+	std::cout << "*. RefFunction Call" << std::endl;
+	RefFunction(Vector);
 
 	std::vector<std::vector<int>> DoubleVector;
 	// DoubleVector.push_back(10);
