@@ -5,7 +5,7 @@ int main()
 {
 	TIME_UNIT ATime = CheckFunctionTime([&]()
 		{
-		});
+        });
 
 	TIME_UNIT BTime = CheckFunctionTime([&]()
 		{
