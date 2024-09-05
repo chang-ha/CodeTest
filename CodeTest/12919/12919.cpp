@@ -2,11 +2,11 @@
 #include <vector>
 
 // 문제
-// https://school.programmers.co.kr/learn/courses/30/lessons/12954
+// https://school.programmers.co.kr/learn/courses/30/lessons/12919
 
 using namespace std;
 
-string solution(vector<string> seoul)
+string solution(vector<string> seoul) 
 {
 	size_t KimIndex = SIZE_MAX;
 
@@ -26,5 +26,7 @@ string solution(vector<string> seoul)
 		return "김서방이 없습니다.";
 	}
 
-	return "김서방은 " + std::to_string(KimIndex) + "에 있다";
+	std::string answer("김서방은 %d에 있다", KimIndex);
+
+	return answer;
 }
