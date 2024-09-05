@@ -1,6 +1,9 @@
 #include <string>
 #include <vector>
 
+// 문제
+// https://school.programmers.co.kr/learn/courses/30/lessons/258712
+
 using namespace std;
 
 #include <unordered_map>
@@ -11,7 +14,6 @@ int solution(vector<string> friends, vector<string> gifts)
     int answer = 0;
 
     std::unordered_map<std::string, int> Friends_Index;
-
     const int Friends_Size = static_cast<int>(friends.size());
     for (int i = 0; i < Friends_Size; i++)
     {
@@ -19,6 +21,7 @@ int solution(vector<string> friends, vector<string> gifts)
         Friends_Index[friends[i]] = i;
     }
 
+    // 친구 - 선물을 준 친구 매핑 
     std::vector<std::vector<int>> GiftVector(Friends_Size);
     for (std::vector<int>& _CurVector : GiftVector)
     {
@@ -34,7 +37,6 @@ int solution(vector<string> friends, vector<string> gifts)
         {
             // Error
             throw std::runtime_error("이름을 공백 기준으로 나눠야합니다.");
-            return -1;
         }
 
         // 주는사람
@@ -47,9 +49,9 @@ int solution(vector<string> friends, vector<string> gifts)
         {
             // Error
             throw std::runtime_error("친구 명단에 존재하지 않습니다.");
-            return -1;
         }
 
+        // [친구][선물을 준 친구] += 1
         GiftVector[Friends_Index[GiftGiver]][Friends_Index[GiftReceiver]] += 1;
     }
 
@@ -74,17 +76,21 @@ int solution(vector<string> friends, vector<string> gifts)
         {
             if (GiverIndex == ReceiverIndex)
             {
+                // 나 자신은 제외
                 continue;
             }
 
+            // 선물 준 개수
             int GiveValue = GiftVector[GiverIndex][ReceiverIndex];
+            // 선물 받은 개수
             int ReceiveValue = GiftVector[ReceiverIndex][GiverIndex];
+
             // 더 많은 선물 준사람 
             if (GiveValue > ReceiveValue)
             {
                 ExpectGift += 1;
             }
-            // 선물 지수가 더 높은사람
+            // 선물을 준 갯수가 같으면 선물 지수가 더 높은사람
             else if (GiveValue == ReceiveValue && GiftScore[GiverIndex] > GiftScore[ReceiverIndex])
             {
                 ExpectGift += 1;
