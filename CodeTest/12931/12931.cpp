@@ -1,5 +1,8 @@
 #include <iostream>
 
+// ¹®Á¦
+// https://school.programmers.co.kr/learn/courses/30/lessons/12931
+
 using namespace std;
 int solution(int n)
 {
