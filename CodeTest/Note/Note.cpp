@@ -51,7 +51,6 @@ vector<string> solution(vector<vector<string>> plans)
 int main()
 {
 	solution({ {"korean", "11:40", "30" }, {"english", "12:10", "20"}, { "math", "12:30", "40" }});
-
 	TIME_UNIT ATime = CheckFunctionTime([&]()
 		{
 		});
