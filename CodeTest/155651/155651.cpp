@@ -1,6 +1,9 @@
 #include <string>
 #include <vector>
 
+// ¹®Á¦
+// https://school.programmers.co.kr/learn/courses/30/lessons/155651
+
 using namespace std;
 
 int CalcuTime(const std::string& _Time)
