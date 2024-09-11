@@ -31,3 +31,10 @@ int solution(int n)
 
     return answer;
 }
+
+int solution(int n)
+{
+    int pivot = n & -n;
+    int before = ((n ^ (n + pivot)) / pivot) >> 2;
+    return (n + pivot) | before;
+}
