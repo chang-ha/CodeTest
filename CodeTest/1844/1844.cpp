@@ -26,7 +26,7 @@ int solution(vector<vector<int> > maps)
 	std::vector<std::vector<int>> VisitMaps(Col_maps_size, vector<int>(Row_maps_size, 0));
 
 	std::queue<std::pair<int, int>> MapOrder;
-	MapOrder.push(std::pair(0, 0));
+	MapOrder.push(std::make_pair(0, 0));
 	VisitMaps[0][0] = 1;
 	VisitMaps[Col_maps_size - 1][Row_maps_size - 1] = -1;
 
@@ -56,7 +56,7 @@ int solution(vector<vector<int> > maps)
 			}
 
 			VisitMaps[MoveCurY][MoveCurX] = VisitMaps[CurY][CurX] + 1;
-			MapOrder.push(std::pair(MoveCurY, MoveCurX));
+			MapOrder.push(std::make_pair(MoveCurY, MoveCurX));
 		}
 	}
 
