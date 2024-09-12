@@ -6,9 +6,11 @@
 
 using namespace std;
 
-// prefix 활용으로 푸는 중 (답 아직 아님 << 구할수 있는거 맞음??)
+// 연속된 값들을 더해야함 -> ex) 불가능한 조합 { 7 1 4 }
+// prefix 활용
+
 #include <set>
-#include <numeric>
+// Dynamic Programming(DP) 활용
 int solution(vector<int> elements)
 {
 	const size_t elements_size = elements.size();
@@ -19,26 +21,47 @@ int solution(vector<int> elements)
 
 	for (size_t i = 1; i < elements_doublesize; i++)
 	{
+		// 7 9 1 1 4
+		// -> 7 9 1 1 4 7 9 1 1 4
+		// i ~ j
+		// 범위를 2배로 늘려서 prefix 계산
+		//   -> 원형 형태로 계산하기 위함
 		Prefix_Sum[i] = Prefix_Sum[i - 1] + elements[i % elements_size];
 	}
 
 	std::set<int> element_count;
-	for (size_t i = 1; i <= elements_size; i++)
+	for (size_t i = 0; i < elements_size; i++)
 	{
-		for (size_t j = 0; j < elements_size; j++)
+		// i보다 1개 이상의 원소가 포함된 prefix_sum
+		// prefix_sum[i + j] -> 0 ~ i + j까지 prefix_sum
+		// prefix_sum[i] -> 0 ~ i까지 prefix_sum
+		// prefix_sum[i + j] - prefix_sum[i] -> (i + 1) ~ j 의 prefix_sum
+		for (size_t j = 1; j <= elements_size; j++)
 		{
-			int a = Prefix_Sum[i + j]; // 0 ~ i + j 까지
-			int b = Prefix_Sum[j]; // 0 ~ j 까지
-			int sum = a - b; // i ~ j 까지
-			element_count.insert(sum);
-			// std::cout << "1. 0 ~ " << i + j << " : " << a << std::endl;
-			// std::cout << "2. 0 ~ " << j << " : " << b << std::endl;
-			// std::cout << "3. " << j << " ~ " << i << " : " << sum << std::endl;
-			// std::cout << "===============" << std::endl;
+			element_count.insert(Prefix_Sum[i + j] - Prefix_Sum[i]);
 		}
 	}
 
 	return static_cast<int>(element_count.size());
+}
+
+// "다른 사람의 코드"
+// DP로 이전 sum 값을 저장해놓는데 runtime 더 효율적임
+int Othersolution(vector<int> elements)
+{
+	std::set<int> S;
+
+	int n = static_cast<int>(elements.size());
+
+	for (int i = 0; i < n; ++i) {
+		int sum = 0;
+		for (int j = i; j < i + n; ++j) {
+			sum += elements[j % n];
+			S.insert(sum);
+		}
+	}
+
+	return static_cast<int>(S.size());
 }
 
 #include <set>
