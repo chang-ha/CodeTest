@@ -1,6 +1,9 @@
 #include <string>
 #include <vector>
 
+// 문제
+// https://school.programmers.co.kr/learn/courses/30/lessons/12953
+
 using namespace std;
 
 // 두 수의 곱 = 최대 공약수 * 최소 공배수
