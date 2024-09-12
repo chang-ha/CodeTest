@@ -14,10 +14,10 @@ int CalcuTime(const std::string& _Time)
 		return -1;
 	}
 
-	size_t DividePos = _Time.find(':');
+	const size_t DividePos = _Time.find(':');
 
-	int Minute = std::stoi(_Time.substr(0, DividePos));
-	int Second = std::stoi(_Time.substr(DividePos + 1));
+	const int Minute = std::stoi(_Time.substr(0, DividePos));
+	const int Second = std::stoi(_Time.substr(DividePos + 1));
 
 	return Minute * 60 + Second;
 }
