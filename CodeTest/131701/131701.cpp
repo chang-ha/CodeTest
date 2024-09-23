@@ -65,6 +65,7 @@ int Othersolution(vector<int> elements)
 }
 
 #include <set>
+#include <cmath>
 int bitsolution(vector<int> elements)
 {
 	const size_t elements_size = elements.size(); // n << n개의 비트 사용
