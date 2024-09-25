@@ -13,7 +13,7 @@ int solution(int n, int k, vector<int> enemy)
 
 	std::priority_queue<int, std::vector<int>> enemy_queue;
 	// deque -> 자료양이 많고(enemy[i]) 중간에 값을 삽입 삭제해서 유리할 것 같았는데
-	// 실제 돌려보면 vector가 2~3배 빠름... (자료양 많은 경우임)
+	// 실제 돌려보면 vector가 2~3배 빠름... (자료양 많은 경우 포함)
 	// std::priority_queue<int, std::deque<int>> enemy_queue;
 	for (const int Curenemy : enemy)
 	{
