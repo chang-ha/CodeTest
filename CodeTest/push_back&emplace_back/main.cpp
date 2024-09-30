@@ -8,6 +8,10 @@ public:
 	MyClass(int A);
 	~MyClass();
 
+	// MyClass(const MyClass& _Others) = delete;
+	// MyClass& operator=(const MyClass& _Other) = delete;
+	// MyClass(MyClass&& _Others) = delete;
+	// MyClass& operator=(MyClass&& _Other) = delete;
 	MyClass(const MyClass& _Others) noexcept;
 	MyClass& operator=(const MyClass& _Other)
 	{
@@ -70,79 +74,91 @@ void RefFunction(std::vector<MyClass>& _Vector)
 	int a = 0;
 }
 
+//int main()
+//{
+//	std::vector<MyClass> Vector;
+//	MyClass A(2);
+//	MyClass B(4);
+//	auto Add = std::addressof(A);
+//
+//	Vector.reserve(6);
+//	// reserve안해주면 vector의 capacity를 넘어서면 
+//	// 모든 MyClass 객체가 이동생성자 호출 및 소멸자 호출됨
+//	// 새로운 vector로 원소들은 이동 / 기존 vector 객체들은 소멸
+//	// 여기서 vector의 reserve 중요성이 또 강조됨
+//
+//
+//	std::cout << "1. Parameter : push_back vs emplace_back" << std::endl;
+//	std::cout << "(1) push_back 호출" << std::endl;
+//	// 1. Vector에 삽입을 위한 임시객체 생성
+//	// 2. 해당 객체 이동 연산
+//	// 3. 임시객체 소멸
+//	Vector.push_back(1);
+//	std::cout << "(2) emplace_back 호출" << std::endl;
+//	// 1. Vector 내부에서 생성자 호출
+//	Vector.emplace_back(3);
+//	std::cout << std::endl;
+//
+//	// 차이 없음
+//	std::cout << "2. Default Constructer : push_back vs emplace_back" << std::endl;
+//	std::cout << "(1) push_back(객체) 호출" << std::endl;
+//	// 1. 임시 객체 생성
+//	// 2. 이동 연산
+//	// 3. 임시 객체 소멸
+//	Vector.push_back(MyClass(2));
+//	std::cout << "(2) emplace_back(객체) 호출" << std::endl;
+//	// 1. 임시 객체 생성
+//	// 2. 이동 연산
+//	// 3. 임시 객체 소멸
+//	Vector.emplace_back(MyClass(2));
+//	std::cout << std::endl;
+//
+//	// 차이 없음
+//	std::cout << "3. Move Constructor : push_back vs emplace_back" << std::endl;
+//	std::cout << "(1) push_back(move) 호출" << std::endl;
+//	// 1. 이동 연산
+//	Vector.push_back(std::move(A));
+//	std::cout << "(2) emplace_back(move) 호출" << std::endl;
+//	// 1. 이동 연산
+//	Vector.emplace_back(std::move(B));
+//	std::cout << "-----------------" << std::endl;
+//
+//	// 추가사항
+//	// 1. vector의 erase
+//	// vector의 자료 구조 특성상 중간 멤버를 지우면
+//	// 뒤에 존재하는 모든 멤버들을 한 칸씩 땡겨야함
+//	std::cout << "*. vector erase" << std::endl;
+//	Vector.erase(Vector.begin());
+//	// 2. Function Parameter
+//	
+//	// vector의 모든 객체가 복사 되었다가 소멸됨
+//	std::cout << "*. Function Call" << std::endl;
+//	Function(Vector);
+//	// vector의 ref를 parameter로 넘겨주기 때문에 복사와 소멸이 이루어 지지 않음
+//	std::cout << "*. RefFunction Call" << std::endl;
+//	RefFunction(Vector);
+//
+//	std::vector<std::vector<int>> DoubleVector;
+//	// DoubleVector.push_back(10);
+//	std::cout << "4. emplace_back 사용 시 주의 사항" << std::endl;
+//	// 이차원 벡터에서 push_back은 컴파일 타임에 에러를 찾을 수 있지만
+//	// DoubleVector.push_back(10);
+//	// emplace_back은 의도하지 않는 상황이 발생할 수 있음 
+//	//	-> 모든 유형의 생성자를 호출하기 때문
+//	//	-> vector(10) 생성자 호출된 꼴 << size = 10, variable = 0;
+//	DoubleVector.emplace_back(10, 0);
+//
+//	int x = 0;
+//}
+
 int main()
 {
-	std::vector<MyClass> Vector;
-	MyClass A(2);
-	MyClass B(4);
-	auto Add = std::addressof(A);
+	std::vector<MyClass> TestVector;
+	TestVector.reserve(10);
+	for (int i = 0; i < 10; i++)
+	{
+		TestVector.emplace_back(1);
+	}
 
-	Vector.reserve(6);
-	// reserve안해주면 vector의 capacity를 넘어서면 
-	// 모든 MyClass 객체가 이동생성자 호출 및 소멸자 호출됨
-	// 새로운 vector로 원소들은 이동 / 기존 vector 객체들은 소멸
-	// 여기서 vector의 reserve 중요성이 또 강조됨
-
-
-	std::cout << "1. Parameter : push_back vs emplace_back" << std::endl;
-	std::cout << "(1) push_back 호출" << std::endl;
-	// 1. Vector에 삽입을 위한 임시객체 생성
-	// 2. 해당 객체 이동 연산
-	// 3. 임시객체 소멸
-	Vector.push_back(1);
-	std::cout << "(2) emplace_back 호출" << std::endl;
-	// 1. Vector 내부에서 생성자 호출
-	Vector.emplace_back(3);
-	std::cout << std::endl;
-
-	// 차이 없음
-	std::cout << "2. Default Constructer : push_back vs emplace_back" << std::endl;
-	std::cout << "(1) push_back(객체) 호출" << std::endl;
-	// 1. 임시 객체 생성
-	// 2. 이동 연산
-	// 3. 임시 객체 소멸
-	Vector.push_back(MyClass(2));
-	std::cout << "(2) emplace_back(객체) 호출" << std::endl;
-	// 1. 임시 객체 생성
-	// 2. 이동 연산
-	// 3. 임시 객체 소멸
-	Vector.emplace_back(MyClass(2));
-	std::cout << std::endl;
-
-	// 차이 없음
-	std::cout << "3. Move Constructor : push_back vs emplace_back" << std::endl;
-	std::cout << "(1) push_back(move) 호출" << std::endl;
-	// 1. 이동 연산
-	Vector.push_back(std::move(A));
-	std::cout << "(2) emplace_back(move) 호출" << std::endl;
-	// 1. 이동 연산
-	Vector.emplace_back(std::move(B));
-	std::cout << "-----------------" << std::endl;
-
-	// 추가사항
-	// 1. vector의 erase
-	// vector의 자료 구조 특성상 중간 멤버를 지우면
-	// 뒤에 존재하는 모든 멤버들을 한 칸씩 땡겨야함
-	std::cout << "*. vector erase" << std::endl;
-	Vector.erase(Vector.begin());
-	// 2. Function Parameter
-	
-	// vector의 모든 객체가 복사 되었다가 소멸됨
-	std::cout << "*. Function Call" << std::endl;
-	Function(Vector);
-	// vector의 ref를 parameter로 넘겨주기 때문에 복사와 소멸이 이루어 지지 않음
-	std::cout << "*. RefFunction Call" << std::endl;
-	RefFunction(Vector);
-
-	std::vector<std::vector<int>> DoubleVector;
-	// DoubleVector.push_back(10);
-	std::cout << "4. emplace_back 사용 시 주의 사항" << std::endl;
-	// 이차원 벡터에서 push_back은 컴파일 타임에 에러를 찾을 수 있지만
-	// DoubleVector.push_back(10);
-	// emplace_back은 의도하지 않는 상황이 발생할 수 있음 
-	//	-> 모든 유형의 생성자를 호출하기 때문
-	//	-> vector(10) 생성자 호출된 꼴 << size = 10, variable = 0;
-	DoubleVector.emplace_back(10, 0);
-
-	int x = 0;
+	TestVector.push_back(1);
 }

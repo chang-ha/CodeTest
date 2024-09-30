@@ -117,21 +117,21 @@ void LocalStruct()
 
 int main()
 {
-	// std::thread A1(Recursive1);
-	// std::thread A2(Recursive2);
-	// std::thread A3(Recursive3);
-	// std::thread A4(Recursive4);
+	std::thread A1(Recursive1);
+	std::thread A2(Recursive2);
+	std::thread A3(Recursive3);
+	std::thread A4(Recursive4);
 	// Recursive5();
-	// A1.join();
-	// A2.join();
-	// A3.join();
-	// A4.join();
+	A1.join();
+	A2.join();
+	A3.join();
+	A4.join();
 
 	// 동일하게 32byte 변수를 사용했지만
 	// 8바이트 지역 변수 사용시 -> 지역변수가 128바이트 스택 메모리 사용
 	// 32바이트 구조체 사용시 -> 지역변수가 64바이트 스택 메모리 사용
-	std::thread StackFrame1(LocalMember);
-	std::thread StackFrame2(LocalStruct);
-	StackFrame1.join();
-	StackFrame2.join();
+	//std::thread StackFrame1(LocalMember);
+	//std::thread StackFrame2(LocalStruct);
+	//StackFrame1.join();
+	//StackFrame2.join();
 }

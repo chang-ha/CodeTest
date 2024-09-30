@@ -1,6 +1,9 @@
 #include <string>
 #include <vector>
 
+// ¹®Á¦
+// https://school.programmers.co.kr/learn/courses/30/lessons/181188
+
 using namespace std;
 
 #include <algorithm>
