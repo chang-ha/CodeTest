@@ -15,14 +15,42 @@ using namespace std;
 // n(n+1) = 2X + 2
 // n^2 + n = 2 X + 2 
 // n(n+1) = 110
-// 
+
+// { °¹¼ö - 1 -> Æ©ÇÃ °¹¼ö
 
 #include <algorithm>
+#include <stdexcept>
+#include <map>
 vector<int> solution(string s)
 {
 	vector<int> answer;
-	int countOfComma = std::count(s.begin(), s.end(), ',');
-	// answer.reserve();
+	const size_t countOfBrace = std::count(s.begin(), s.end(), '{');
+	if (0 == countOfBrace)
+	{
+		// Error
+		throw std::invalid_argument("check your argument");
+	}
+	answer.resize(countOfBrace - 1);
+
+	std::map<int, int> TupleMap;
+	std::string CalcuString = "";
+	for (const char CurChar : s)
+	{
+		if (0 != std::isalnum(CurChar))
+		{
+			CalcuString += CurChar;
+		}
+		else if ("" != CalcuString)
+		{
+			TupleMap[std::stoi(CalcuString)] += 1;
+			CalcuString = "";
+		}
+	}
+
+	for (const std::pair<int, int>& CurPair : TupleMap)
+	{
+		answer[countOfBrace - 1 - CurPair.second] = CurPair.first;
+	}
 
 	return answer;
 }
