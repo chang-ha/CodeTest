@@ -1,7 +1,7 @@
 #include <iostream>
 #include <TimeCheck\TimeCheck.h>
 
-int main() 
+int main()
 {
 	// solution({ {40, 2900},{23, 10000},{11, 5200},{5, 5900},{40, 3100},{27, 9200},{32, 6900} }, { 1300, 1500, 1600, 4900 });
 	TIME_UNIT ATime = CheckFunctionTime([&]()
