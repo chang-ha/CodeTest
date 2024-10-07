@@ -1,5 +1,9 @@
 #include <algorithm>
 
+//		   i-1   i
+// 7 1 3	2	 5 4 1
+//				 1 4 5
+
 template <class IterClass>
 bool MY_next_permutation(IterClass Begin, IterClass End)
 {
