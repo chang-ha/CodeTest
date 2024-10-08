@@ -177,7 +177,14 @@ int main()
 	{
 		moveVector[i] = std::move(Vector[i]);
 	}
-	moveVector.shrink_to_fit();
+
+	std::vector<MyClass> shrinkVector;
+	shrinkVector.reserve(10);
+	for (size_t i = 0; i < 5; i++)
+	{
+		shrinkVector.emplace_back();
+	}
+	shrinkVector.shrink_to_fit();
 	moveVector.emplace_back();
 	for (size_t i = 0; i < 10; i++)
 	{

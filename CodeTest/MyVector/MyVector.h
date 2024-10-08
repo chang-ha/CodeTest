@@ -108,6 +108,6 @@ private:
 
 	size_t	mSize = 0;
 	size_t	mCapacity = 0;
-	T*		mData;
+	T*		mData = nullptr;
 };
 
