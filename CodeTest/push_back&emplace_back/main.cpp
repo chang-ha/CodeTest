@@ -153,12 +153,36 @@ void RefFunction(std::vector<MyClass>& _Vector)
 
 int main()
 {
-	std::vector<MyClass> TestVector;
-	TestVector.reserve(10);
-	for (int i = 0; i < 10; i++)
+	std::vector<int> A(7, 0);
+	A.resize(5);
+
+	MyClass* Data = new MyClass[10];
+
+	MyClass* moveData = new MyClass[11];
+	MyClass* copyData = new MyClass[11];
+	for (size_t i = 0; i < 10; i++)
 	{
-		TestVector.emplace_back(1);
+		moveData[i] = std::move(Data[i]);
 	}
 
-	TestVector.push_back(1);
+	for (size_t i = 0; i < 10; i++)
+	{
+		copyData[i] = Data[i];
+	}
+
+	std::vector<MyClass> Vector(10);
+	std::vector<MyClass> moveVector(10);
+	std::vector<MyClass> copyVector(10);
+	for (size_t i = 0; i < 10; i++)
+	{
+		moveVector[i] = std::move(Vector[i]);
+	}
+	moveVector.shrink_to_fit();
+	moveVector.emplace_back();
+	for (size_t i = 0; i < 10; i++)
+	{
+		copyVector[i] = Vector[i];
+	}
+	copyVector.reserve(10);
+	int a = 0;
 }
