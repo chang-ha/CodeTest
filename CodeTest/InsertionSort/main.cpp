@@ -1,5 +1,7 @@
-
 #include <vector>
+
+// 평균적으로 O(N^2) 의 시간 복잡도를 가지는데
+// 삽입 정렬은 원소의 갯수가 작은 경우 or 거의 정렬된 상태에서는 굉장히 빠름
 
 template <typename DataType>
 void InsertionSort(std::vector<DataType>& InVector)
