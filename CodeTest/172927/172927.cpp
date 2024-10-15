@@ -1,6 +1,9 @@
 #include <string>
 #include <vector>
 
+// 문제
+// https://school.programmers.co.kr/learn/courses/30/lessons/172927
+
 using namespace std;
 
 #include <stdexcept>
@@ -8,18 +11,21 @@ using namespace std;
 #include <numeric>
 int solution(vector<int> picks, vector<string> minerals)
 {
+	// 광물 갯수
 	const int minerals_size = static_cast<int>(minerals.size());
 	if (0 == minerals_size)
 	{
 		return 0;
 	}
 
+	// 곡괭이 갯수
 	const int picks_count = std::accumulate(picks.begin(), picks.end(), 0);
 	if (0 == picks_count)
 	{
 		return 0;
 	}
 
+	// 곡괭이 갯수를 넘을 수 없음
 	const int minerals_vector_size = std::min(minerals_size / 5 + 1, picks_count);
 	// Sum minerals Value , Sum minerals count
 	std::vector<std::pair<int, int>> minerals_vector(minerals_vector_size, { 0, 0 });
@@ -27,7 +33,7 @@ int solution(vector<int> picks, vector<string> minerals)
 	for (int i = 0, j = 0; i < minerals_size && j < picks_count; i++, j = i / 5)
 	{
 		int minerals_value = 0;
-
+		
 		if ("diamond" == minerals[i])
 		{
 			minerals_value = 25;
@@ -45,10 +51,13 @@ int solution(vector<int> picks, vector<string> minerals)
 			throw std::invalid_argument("argument contains not mineral's name");
 		}
 
+		// 광물별 Value를 더함
 		minerals_vector[i / 5].first += minerals_value;
+		// 광물의 갯수를 더함
 		minerals_vector[i / 5].second += 1;
 	}
 
+	// 광물 Value로 Sort
 	std::sort(minerals_vector.begin(), minerals_vector.end(), [](const std::pair<int, int>& First, const std::pair<int, int>& Second)
 		{
 			return First.first > Second.first;
@@ -65,23 +74,34 @@ int solution(vector<int> picks, vector<string> minerals)
 
 		switch (Cur_pick)
 		{
+		// 다이아 곡괭이
 		case 0:
+			// 피로도 = 광물의 갯수
 			answer += minerals_vector[i].second;
 			break;
+		// 철 곡괭이
 		case 1:
 		{
+			// Value가 5의 배수가 나오는 경우
+			// 1. 철 5개 or 돌 5개
+			// 2. 다이아 1개
+			// 3. 다이아로만 이루어 짐
 			if (5 == minerals_vector[i].first)
 			{
-				// 1 iron or 5 ston
+				// 5 iron or 5 ston or 1 dia
+				// 피로도 = 광물의 갯수
 				answer += minerals_vector[i].second;
 			}
 			else
 			{
+				// 피로도 = value / 5 + value % 5 (다이아 캐는데 피로도 5 소모 + 나머지 광물 캐는데 피로도 1 소모)
 				answer += minerals_vector[i].first / 5 + minerals_vector[i].first % 5;
 			}
 			break;
 		}
+		// 돌 곡괭이
 		case 2:
+			// 피로도 = 광물의 Value
 			answer += minerals_vector[i].first;
 			break;
 		default:

@@ -11,7 +11,7 @@ long long Vectorsolution(vector<int> weights)
 {
 	long long answer = 0;
 
-	// 무게 범위 100 ~ 1000 -> 벡터 900개로 표현 가능
+	// 무게 범위 100 ~ 1000
 	vector<long long> CountingSort(1001, 0);
 
 	for (const int Curweight : weights)
@@ -26,12 +26,14 @@ long long Vectorsolution(vector<int> weights)
 			continue;
 		}
 
+		// 2 : 4 == 4 : 2
 		int FindWeight = i * 2;
 		if (1000 >= FindWeight)
 		{
 			answer += CountingSort[i] * CountingSort[FindWeight];
 		}
 
+		// 2 : 3 == 3 : 2
 		if (0 == i % 2)
 		{
 			FindWeight = i / 2 * 3;
@@ -41,6 +43,7 @@ long long Vectorsolution(vector<int> weights)
 			}
 		}
 
+		// 3 : 4 == 4 : 3
 		if (0 == i % 3)
 		{
 			FindWeight = i / 3 * 4;
@@ -50,6 +53,7 @@ long long Vectorsolution(vector<int> weights)
 			}
 		}
 
+		// 2 : 2 == 3 : 3 == 4 : 4
 		answer += (CountingSort[i] - 1) * CountingSort[i] / 2;
 	}
 
